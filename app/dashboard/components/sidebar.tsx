@@ -23,10 +23,14 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import { usePathname } from "next/navigation"
 import { IconInnerShadowTop, IconReport } from "@tabler/icons-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useState } from "react"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 
 const items = [
   {
@@ -38,6 +42,12 @@ const items = [
     title: "Meters",
     url: "/dashboard/meters",
     icon: CircleGauge,
+    subItems: [
+      { title: "List", url: "/dashboard/meters", icon: CircleGauge },
+      { title: "Create", url: "/dashboard/meters/create", icon: CircleGauge },
+      { title: "Assign Area", url: "/dashboard/meters/area", icon: LandPlot },
+      { title: "Assign Customer", url: "/dashboard/meters/customer", icon: Users },
+    ],
   },
   {
     title: "Areas",
@@ -63,8 +73,9 @@ const items = [
 
 export function SaSidebar() {
     const pathname = usePathname()
-    console.log(pathname);
-  return (
+    const [metersOpen, setMetersOpen] = useState(false)
+
+    return (
     <Sidebar>
         <SidebarHeader>
         <SidebarMenu>
@@ -86,16 +97,52 @@ export function SaSidebar() {
           <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={item.url.trim()==pathname.trim()}>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {items.map((item) =>
+                item.title === "Meters" ? (
+                  <Collapsible key={item.title} open={metersOpen} onOpenChange={setMetersOpen}>
+                    <SidebarMenuItem>
+                      <CollapsibleTrigger asChild>
+                        <SidebarMenuButton
+                          isActive={pathname.startsWith("/dashboard/meters")}
+                          className="flex items-center w-full"
+                        >
+                          <item.icon />
+                          <span>{item.title}</span>
+                          <ChevronUp
+                            className={`ml-auto transition-transform ${metersOpen ? "rotate-180" : ""}`}
+                          />
+                        </SidebarMenuButton>
+                      </CollapsibleTrigger>
+                    </SidebarMenuItem>
+                    <CollapsibleContent>
+                      <SidebarMenuSub>
+                        {item.subItems?.map((sub) => (
+                          <SidebarMenuSubItem key={sub.title}>
+                            <SidebarMenuButton
+                              asChild
+                              isActive={pathname === sub.url}
+                            >
+                              <a href={sub.url} className="flex items-center">
+                                <sub.icon className="mr-2 w-4 h-4" />
+                                <span>{sub.title}</span>
+                              </a>
+                            </SidebarMenuButton>
+                          </SidebarMenuSubItem>
+                        ))}
+                      </SidebarMenuSub>
+                    </CollapsibleContent>
+                  </Collapsible>
+                ) : (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild isActive={item.url.trim() === pathname.trim()}>
+                      <a href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              )}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

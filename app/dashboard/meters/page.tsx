@@ -1,10 +1,10 @@
 import NavbarDB from "../components/navbar";
 
-export default function Dashoard() {
+export default function ListMeterPage() {
     return (
         <main>
             <NavbarDB/>
-            <p>Meter</p>
+            <p>Meters</p>
         </main>
     );
 }
