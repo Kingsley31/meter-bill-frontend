@@ -20,7 +20,7 @@ export default function ListMeterPage() {
             <div className="mx-3 my-8 w-full max-w-3xl md:mx-auto">
                 <MeterStatistics />
                 <div className="h-10"></div>
-                <Tabs defaultValue="account" className="w-full">
+                <Tabs defaultValue="all" className="w-full">
                     <TabsList>
                         <TabsTrigger value="all">All Meters</TabsTrigger>
                         <TabsTrigger value="unread">Unread Meters</TabsTrigger>
