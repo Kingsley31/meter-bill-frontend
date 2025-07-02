@@ -31,42 +31,41 @@ import { IconInnerShadowTop, IconReport } from "@tabler/icons-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useState } from "react"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { routes } from "@/data/routes"
 
 const items = [
   {
-    title: "Home",
-    url: "/dashboard",
+    title: routes.dashboard.title,
+    url: routes.dashboard.path,
     icon: Home,
   },
   {
-    title: "Meters",
-    url: "/dashboard/meters",
+    title: routes.meters.title,
+    url: routes.meters.path,
     icon: CircleGauge,
     subItems: [
-      { title: "List", url: "/dashboard/meters", icon: CircleGauge },
-      { title: "Create", url: "/dashboard/meters/create", icon: CircleGauge },
-      { title: "Assign Area", url: "/dashboard/meters/area", icon: LandPlot },
-      { title: "Assign Customer", url: "/dashboard/meters/customer", icon: Users },
+      { title: routes.meters.title, url: routes.meters.path, icon: CircleGauge },
+      { title: routes.createMeter.title, url: routes.createMeter.path, icon: CircleGauge },
     ],
   },
   {
-    title: "Areas",
-    url: "#",
+    title: routes.areas.title,
+    url: routes.areas.path,
     icon: LandPlot,
   },
   {
-    title: "Customers",
-    url: "#",
+    title: routes.customers.title,
+    url: routes.customers.path,
     icon: Users,
   },
   {
-    title: "Bills",
-    url: "#",
+    title: routes.bills.title,
+    url: routes.bills.path,
     icon: Receipt,
   },
   {
-    title: "Report",
-    url: "#",
+    title: routes.report.title,
+    url: routes.report.path,
     icon: IconReport,
   },
 ]
@@ -98,12 +97,12 @@ export function SaSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) =>
-                item.title === "Meters" ? (
+                item.title === routes.meters.title ? (
                   <Collapsible key={item.title} open={metersOpen} onOpenChange={setMetersOpen}>
                     <SidebarMenuItem>
                       <CollapsibleTrigger asChild>
                         <SidebarMenuButton
-                          isActive={pathname.startsWith("/dashboard/meters")}
+                          isActive={pathname.startsWith(routes.meters.path)}
                           className="flex items-center w-full"
                         >
                           <item.icon />

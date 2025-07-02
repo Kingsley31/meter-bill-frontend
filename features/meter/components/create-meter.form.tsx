@@ -11,12 +11,11 @@ import { Separator } from "@/components/ui/separator"
 import { MeterPurpose, MeterType, Operaor } from "../meter.enums"
 import { createMeterSchema, CreateMeterFormValues } from "../validations/create-meter.schema"
 import { subMeterOperators } from "../data"
-import { toast } from "sonner"
 
 import PaginatedAsyncSelect, { LoadOptions, OptionType } from "@/components/paginated-async-select"
 import { useCreateMeter } from "../hooks/use-create-meter.hook"
 import { getErrorMessage } from "@/lib/utils"
-import { displayError } from "@/components/display-message"
+import { displayError, displaySuccess } from "@/components/display-message"
 
 type CreateMeterFormProps = {
     loadAreaOptions: LoadOptions;
@@ -66,16 +65,7 @@ export function CreateMeterForm({ loadAreaOptions, loadMeterOptions }: CreateMet
         }
         createMeterMutation.mutate({...values, areaName}, {
             onSuccess: (data) => {
-                toast.success(
-                    <div className="text-green-600">
-                        <h2 className="font-bold">Meter created successfully!</h2>
-                        <p className="font-light">Meter {data.meterNumber} has been created.</p>
-                    </div>,
-                    {
-                        style: { background: '#f0fff4', color: '#16a34a' },
-                        duration: 3000,
-                    }
-                );
+                displaySuccess("Meter created successfully", `Meter ${data.meterNumber} has been created.`);
                 form.reset();
             },
             onError: (error: unknown) => {
@@ -94,7 +84,7 @@ export function CreateMeterForm({ loadAreaOptions, loadMeterOptions }: CreateMet
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     <CardContent className="space-y-8">
-                        <div className="grid grid-cols-2 gap-6 mb-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <FormField
                                 control={form.control}
                                 name="meterNumber"
@@ -284,12 +274,12 @@ export function CreateMeterForm({ loadAreaOptions, loadMeterOptions }: CreateMet
                                     <div className="text-sm text-red-600 mb-2">{subMeterError}</div>
                                 )}
                                 {fields.map((fieldItem, idx) => (
-                                    <div key={fieldItem.id} className="grid grid-cols-4 gap-6 mb-2 items-end justify-start">
+                                    <div key={fieldItem.id} className="grid grid-cols-5 gap-6 mb-6 items-end justify-start">
                                         <FormField
                                             control={form.control}
                                             name={`subMeters.${idx}.subMeterId`}
                                             render={({ field }) => (
-                                                <FormItem className="col-span-2">
+                                                <FormItem className="col-span-3">
                                                     <FormLabel>Sub Meter</FormLabel>
                                                     <FormControl>
                                                         {isClient ? (
