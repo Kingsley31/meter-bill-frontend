@@ -11,7 +11,7 @@ export function MeterStatistics() {
 	const totalConsumption = 0;
 
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-2 gap-8 mx-auto">
+		<div className="w-full max-w-screen grid grid-cols-1 md:grid-cols-2 gap-8 mx-auto">
 			<Card>
 				<CardHeader className="flex flex-row items-center justify-between pb-2">
 					<CardTitle className="text-sm font-medium">Total Meters</CardTitle>

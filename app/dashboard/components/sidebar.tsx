@@ -75,7 +75,7 @@ export function SaSidebar() {
     const [metersOpen, setMetersOpen] = useState(false)
 
     return (
-    <Sidebar>
+    <Sidebar collapsible="offcanvas" variant="inset">
         <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>

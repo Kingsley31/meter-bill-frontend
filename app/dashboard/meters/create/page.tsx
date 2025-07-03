@@ -13,8 +13,7 @@ export default function CreateMeterPage() {
         const {loadOptions:loadMeterOptions} = useResourceOptions(ResourceType.METER);
     return (
         <main>
-            <NavbarDB>
-                <h1 className="text-base font-medium">Create Meter</h1>
+            <NavbarDB title="Create Meter">
                 <Button asChild><Link href={routes.meters.path}>View Meters<EyeIcon/></Link></Button>
             </NavbarDB>
             <div className="px-auto py-8 max-w-4xl mx-auto">

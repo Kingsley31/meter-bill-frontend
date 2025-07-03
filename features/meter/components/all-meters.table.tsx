@@ -36,7 +36,7 @@ export function AllMetersTable() {
   const { data, isLoading } = useListMeter(filters);
 
   return (
-    <Card className="mx-auto">
+    <Card className="w-full max-w-screen mx-auto">
       <CardHeader>
         <CardTitle>All Meters</CardTitle>
         <CardDescription>
@@ -44,7 +44,7 @@ export function AllMetersTable() {
         </CardDescription>
         <CardAction><FilterMeter /></CardAction>
       </CardHeader>
-      <CardContent className="overflow-x-auto w-full">
+      <CardContent>
         <DataTable
           columns={columns}
           data={data?.data || []}

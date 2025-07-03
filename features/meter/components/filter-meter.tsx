@@ -70,12 +70,12 @@ export function FilterMeter() {
           variant="outline"
           size="icon"
           aria-label="Filter"
-          className="border-accent shadow-sm focus-visible:ring-0 focus-visible:ring-offset-0 focus:ring-0 focus:outline-none"
+          className="border-accent shadow-sm"
         >
           <Filter className="w-5 h-5" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[480px] max-w-full p-6 rounded-xl shadow-lg border bg-white" align="start">
+      <PopoverContent className="w-full md:w-4/5 max-w-full p-6 rounded-xl shadow-lg border bg-white" align="start">
         <form
           className="flex flex-col gap-4"
           onSubmit={handleSubmit(onSubmit)}
