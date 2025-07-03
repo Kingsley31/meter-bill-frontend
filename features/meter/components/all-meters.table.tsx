@@ -7,7 +7,6 @@ import { useListMeter } from "../hooks/use-list-meter.hook";
 import type { ListMeterFilters } from "../api/list-meter.api";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardAction } from "@/components/ui/card";
 import { FilterMeter } from "./filter-meter";
-import { Suspense } from "react";
 
 export function AllMetersTable() {
   const searchParams = useSearchParams();
@@ -43,7 +42,7 @@ export function AllMetersTable() {
         <CardDescription>
           View, filter, and manage all electric meters in the system.
         </CardDescription>
-        <CardAction><Suspense><FilterMeter /></Suspense></CardAction>
+        <CardAction><FilterMeter /></CardAction>
       </CardHeader>
       <CardContent>
         <DataTable

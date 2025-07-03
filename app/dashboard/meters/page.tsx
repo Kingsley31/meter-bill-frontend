@@ -6,6 +6,7 @@ import { DownloadIcon, PlusIcon } from "lucide-react";
 import { MeterStatistics } from "@/features/meter/components/meter-statistics";
 import { AllMetersTable } from "@/features/meter/components/all-meters.table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Suspense } from "react";
 
 export default function ListMeterPage() {
     return (
@@ -24,8 +25,8 @@ export default function ListMeterPage() {
                         <TabsTrigger value="all">All Meters</TabsTrigger>
                         <TabsTrigger value="unread">Unread Meters</TabsTrigger>
                     </TabsList>
-                    <TabsContent value="all"><AllMetersTable /></TabsContent>
-                    <TabsContent value="unread"><AllMetersTable /></TabsContent>
+                    <TabsContent value="all"><Suspense><AllMetersTable /></Suspense></TabsContent>
+                    <TabsContent value="unread"><Suspense><AllMetersTable /></Suspense></TabsContent>
                 </Tabs>
             </div>
         </main>
