@@ -11,6 +11,7 @@ export type Meter = {
   meterNumber: string;
   areaId: string;
   areaName: string;
+  location: string;
   ctMultiplierFactor: number;
   purpose: MeterPurpose;
   type: MeterType;
@@ -23,6 +24,7 @@ export type Meter = {
   customerName: string;
   tariff: number;
   currentKwhReading: number;
+  currentKwhReadingDate: string; // ISO date string
   lastBillKwhConsumption: number;
   calculationReferenceMeterId?: string;
   createdAt: string; // ISO date string

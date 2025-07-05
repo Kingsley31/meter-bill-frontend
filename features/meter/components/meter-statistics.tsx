@@ -2,13 +2,12 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Gauge, Zap, EyeOff, TrendingUp } from "lucide-react";
+import { useMeterStats } from "../hooks/use-meter-stats.hook";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function MeterStatistics() {
 	// Replace these with real data from your store or API as needed
-	const totalMeters = 0;
-	const activeMeters = 0;
-	const totalUnreadMeters = 0;
-	const totalConsumption = 0;
+	const {data, isLoading }= useMeterStats();
 
 	return (
 		<div className="w-full max-w-screen grid grid-cols-1 md:grid-cols-2 gap-8 mx-auto">
@@ -18,7 +17,7 @@ export function MeterStatistics() {
 					<Gauge className="h-5 w-5 text-primary" />
 				</CardHeader>
 				<CardContent>
-					<div className="text-2xl font-bold">{totalMeters}</div>
+					{isLoading ? (<Skeleton className="h-4 w-2/3" />):(<div className="text-2xl font-bold">{data?.totalMeters ?? 0}</div>)}
 					<div className="text-xs text-muted-foreground mt-1">
 						All meters registered in the system
 					</div>
@@ -30,7 +29,10 @@ export function MeterStatistics() {
 					<Zap className="h-5 w-5 text-green-600" />
 				</CardHeader>
 				<CardContent>
-					<div className="text-2xl font-bold">{activeMeters}</div>
+					{isLoading ? 
+					(<Skeleton className="h-4 w-2/3" />)
+					:
+					(<div className="text-2xl font-bold">{data?.totalActiveMeters ?? 0}</div>)}
 					<div className="text-xs text-muted-foreground mt-1">
 						Meters currently active and reporting
 					</div>
@@ -42,7 +44,10 @@ export function MeterStatistics() {
 					<EyeOff className="h-5 w-5 text-blue-600" />
 				</CardHeader>
 				<CardContent>
-					<div className="text-2xl font-bold">{totalUnreadMeters}</div>
+					{isLoading ? 
+					(<Skeleton className="h-4 w-2/3" />)
+					:
+					(<div className="text-2xl font-bold">{data?.totalUnreadMeters ?? 0}</div>)}
 					<div className="text-xs text-muted-foreground mt-1">
 						Meters without a recent reading
 					</div>
@@ -54,9 +59,12 @@ export function MeterStatistics() {
 					<TrendingUp className="h-5 w-5 text-orange-600" />
 				</CardHeader>
 				<CardContent>
-					<div className="text-2xl font-bold">
-						{totalConsumption.toLocaleString()} kWh
-					</div>
+					{isLoading ? 
+					(<Skeleton className="h-4 w-2/3" />)
+					:
+					(<div className="text-2xl font-bold">
+						{data?.averageEnergyConsumption ? data?.averageEnergyConsumption.toLocaleString() : 0} kWh
+					</div>)}
 					<div className="text-xs text-muted-foreground mt-1">
 						Total kWh consumed by all meters
 					</div>

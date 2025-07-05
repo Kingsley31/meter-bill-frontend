@@ -6,19 +6,14 @@ import { MoreHorizontal } from "lucide-react";
 import { routes } from "@/data/routes";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { format } from "date-fns";
 
-export const meterColumns: ColumnDef<Meter>[] = [
+export const unreadMeterColumns: ColumnDef<Meter>[] = [
   {
     accessorKey: "meterNumber",
     header: "Meter Number",
     cell: ({ row }) => row.original.meterNumber,
   },
-   
-  // {
-  //   accessorKey: "ctRating",
-  //   header: "CT Rating",
-  //   cell: ({ row }) => row.original.ctRating,
-  // },
   {
     accessorKey: "type",
     header: "Type",
@@ -30,9 +25,9 @@ export const meterColumns: ColumnDef<Meter>[] = [
     cell: ({ row }) => row.original.ctMultiplierFactor,
   },
   {
-    accessorKey: "purpose",
-    header: "Purpose",
-    cell: ({ row }) => row.original.purpose,
+    accessorKey: "currentKwhReadingDate",
+    header: "Last Read",
+    cell: ({ row }) => row.original.currentKwhReadingDate ? format(new Date(row.original.currentKwhReadingDate), "dd MMM yyyy") : "N/A",
   },
   {
     accessorKey: "isActive",
@@ -50,9 +45,9 @@ export const meterColumns: ColumnDef<Meter>[] = [
     ),
   },
   {
-    accessorKey: "currentKwhReading",
-    header: "Current kWh",
-    cell: ({ row }) => row.original.currentKwhReading ?? 0,
+    accessorKey: "purpose",
+    header: "Purpose",
+    cell: ({ row }) => row.original.purpose,
   },
   {
     id: "actions",

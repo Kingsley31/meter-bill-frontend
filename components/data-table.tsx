@@ -17,7 +17,9 @@ import {
 } from "@/components/ui/table"
 import { Button } from "./ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { AlertTriangle } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 interface PaginationState {
   pageIndex: number; // zero-based
@@ -32,6 +34,8 @@ interface DataTableProps<TData, TValue> {
   loading?: boolean;
   skeletonRows?: number;
   pagination: PaginationState;
+  error?: unknown;
+  onRetry?: () => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -41,9 +45,12 @@ export function DataTable<TData, TValue>({
   loading = false,
   skeletonRows = 5,
   pagination,
+  error,
+  onRetry,
 }: DataTableProps<TData, TValue>) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [retrying, setRetrying] = useState(false);
 
   const table = useReactTable({
     data,
@@ -68,6 +75,35 @@ export function DataTable<TData, TValue>({
   };
 
   const totalPages = Math.ceil(pagination.total / pagination.pageSize);
+
+  // Error UI
+  if (error) {
+    console.log(error);
+    return (
+      <div className="w-full flex flex-col items-center justify-center">
+        <div className="flex w-full flex-col items-center gap-3 bg-red-50 border border-red-200 rounded-lg px-2 py-16 mx-auto">
+          <AlertTriangle className="h-8 w-8 text-red-500 mb-2" />
+          <div className="text-base font-semibold text-red-700">Failed to load records</div>
+          <div className="text-sm text-red-600 mb-2">
+            {typeof error === "string"
+              ? error
+              : "There was an error retrieving the records. Please try again."}
+          </div>
+          <Button
+            variant="destructive"
+            onClick={async () => {
+              setRetrying(true);
+              if (onRetry) await onRetry();
+              setRetrying(false);
+            }}
+            disabled={retrying}
+          >
+            {retrying ? "Retrying..." : "Retry"}
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full overflow-hidden">
@@ -129,7 +165,7 @@ export function DataTable<TData, TValue>({
         <div className="text-muted-foreground flex-1 text-sm">
           {loading
             ? "Loading..."
-            : `${pagination.total} row(s) retrieved.`}
+            : `${data.length} of ${pagination.total} row(s) retrieved.`}
         </div>
         <div className="space-x-2 flex items-center">
           <Button

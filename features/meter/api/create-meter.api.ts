@@ -6,6 +6,7 @@ export type CreateMeterPayload = {
   meterNumber: string;
   areaId: string;
   areaName: string;
+  location: string;
   ctRating: number;
   ctMultiplierFactor: number;
   purpose: MeterPurpose;

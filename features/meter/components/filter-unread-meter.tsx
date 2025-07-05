@@ -13,29 +13,34 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useResourceOptions } from "@/hooks/use-resource-options";
 import { ResourceType } from "@/enums/resuorce-type";
 import PaginatedAsyncSelect, { OptionType } from "@/components/paginated-async-select";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { Popover as ShadPopover } from "@/components/ui/popover"; // alias to avoid conflict
 
-export type MeterFilterValues = {
+export type UnreadMeterFilterValues = {
   search?: string;
   areaId?: string;
   type?: MeterType;
   purpose?: MeterPurpose;
+  startDate?: string;
+  endDate?: string;
 };
 
-export function FilterMeter() {
-  // Example options, replace with your actual options or fetch from context/store
- const { loadOptions: loadAreaOptions} = useResourceOptions(ResourceType.AREA);
+export function FilterUnreadMeter() {
+  const { loadOptions: loadAreaOptions } = useResourceOptions(ResourceType.AREA);
 
-  const { register, handleSubmit, reset, control } = useForm<MeterFilterValues>();
+  const { register, handleSubmit, reset, control } = useForm<UnreadMeterFilterValues>();
   const [open, setOpen] = useState(false);
+  const [ startCalenderOpen, setStartCalenderOpen]= useState(false);
+  const [ endCalenderOpen, setEndCalenderOpen]= useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const onSubmit = (values: MeterFilterValues) => {
+  const onSubmit = (values: UnreadMeterFilterValues) => {
     const params = new URLSearchParams();
     Object.entries(values).forEach(([key, value]) => {
       if (value) params.set(key, value);
     });
-    // Keep existing params that are not in the form
     searchParams.forEach((v, k) => {
       if (!params.has(k)) params.set(k, v);
     });
@@ -89,12 +94,11 @@ export function FilterMeter() {
                 name="areaId"
                 render={({ field }) => (
                   <PaginatedAsyncSelect
-                      loadOptions={loadAreaOptions}
-                      setFormValue={(option: OptionType | null) => {
-                          field.onChange(option?.value)
-                          // setAreaName(option?.label || "")
-                      }}
-                      placeholder="Select area"
+                    loadOptions={loadAreaOptions}
+                    setFormValue={(option: OptionType | null) => {
+                      field.onChange(option?.value);
+                    }}
+                    placeholder="Select area"
                   />
                 )}
               />
@@ -140,6 +144,82 @@ export function FilterMeter() {
                   )}
                 />
               </div>
+            </div>
+          </div>
+          {/* Start Date and End Date */}
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+            <div>
+              <label className="block text-xs font-semibold mb-1 text-muted-foreground">Start Date</label>
+              <Controller
+                control={control}
+                name="startDate"
+                render={({ field }) => (
+                  <ShadPopover open={startCalenderOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={clsx(
+                          "w-full justify-start text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+
+                        onClick={()=> setStartCalenderOpen(true)}
+                      >
+                        {field.value
+                          ? format(new Date(field.value), "PPP")
+                          : "Pick a date"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent align="start" className="p-0">
+                      <Calendar
+                        mode="single"
+                        selected={field.value ? new Date(field.value) : undefined}
+                        onSelect={(date: Date | undefined) => {
+                          field.onChange(date ? date.toISOString(): "");
+                          setStartCalenderOpen(false);
+                        }}
+                      />
+                    </PopoverContent>
+                  </ShadPopover>
+                )}
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold mb-1 text-muted-foreground">End Date</label>
+              <Controller
+                control={control}
+                name="endDate"
+                render={({ field }) => (
+                  <ShadPopover open={endCalenderOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={clsx(
+                          "w-full justify-start text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+
+                        onClick={()=> setEndCalenderOpen(true)}
+                      >
+                        {field.value
+                          ? format(new Date(field.value), "PPP")
+                          : "Pick a date"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent align="start" className="p-0">
+                      <Calendar
+                        mode="single"
+                        selected={field.value ? new Date(field.value) : undefined}
+                        onSelect={(date: Date | undefined) => {
+                          field.onChange(date ? date.toISOString(): "");
+                          setEndCalenderOpen(false);
+                        }}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </ShadPopover>
+                )}
+              />
             </div>
           </div>
           <div className="flex gap-2 justify-end pt-2">

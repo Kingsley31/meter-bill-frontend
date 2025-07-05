@@ -2,7 +2,7 @@
 
 import { DataTable } from "@/components/data-table";
 import { useSearchParams } from "next/navigation";
-import { columns } from "./meter.colums";
+import { meterColumns } from "./meter.colums";
 import { useListMeter } from "../hooks/use-list-meter.hook";
 import type { ListMeterFilters } from "../api/list-meter.api";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardAction } from "@/components/ui/card";
@@ -23,17 +23,13 @@ export function AllMetersTable() {
       key === "search" ||
       key === "areaId" ||
       key === "type" ||
-      key === "purpose" ||
-      key === "meterNumber" ||
-      key === "customerId" ||
-      key === "customerName"
+      key === "purpose"
     ) {
-      // Only assign known filter keys
       (filters as Record<string, unknown>)[key] = value;
     }
   });
 
-  const { data, isLoading } = useListMeter(filters);
+  const { data, isLoading, error, refetch } = useListMeter(filters);
 
   return (
     <Card className="w-full max-w-screen mx-auto">
@@ -46,7 +42,7 @@ export function AllMetersTable() {
       </CardHeader>
       <CardContent>
         <DataTable
-          columns={columns}
+          columns={meterColumns}
           data={data?.data || []}
           emptyMessage="No meters found."
           loading={isLoading}
@@ -56,6 +52,8 @@ export function AllMetersTable() {
             pageSize,
             total: data?.total || 0,
           }}
+          error={error}
+          onRetry={refetch}
         />
       </CardContent>
     </Card>

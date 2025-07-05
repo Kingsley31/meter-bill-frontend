@@ -3,6 +3,7 @@ import { MeterPurpose, MeterType, Operaor } from "../meter.enums"
 
 export const createMeterSchema = z.object({
     meterNumber: z.string().min(1, "Meter number is required"),
+    location: z.string().min(1, "Location number is required"),
     areaId: z.string().min(1, "Area is required"),
     ctRating: z.coerce.number().min(1, "CT Rating is required"),
     ctMultiplierFactor: z.coerce.number().min(1, "CT Multiplier is required"),
