@@ -4,10 +4,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Gauge, Zap, EyeOff, TrendingUp } from "lucide-react";
 import { useMeterStats } from "../hooks/use-meter-stats.hook";
 import { Skeleton } from "@/components/ui/skeleton";
+import { displayError } from "@/components/display-message";
+import { getErrorMessage } from "@/lib/utils";
 
 export function MeterStatistics() {
 	// Replace these with real data from your store or API as needed
-	const {data, isLoading }= useMeterStats();
+	const {data, isLoading, error }= useMeterStats();
+
+	if (error) {
+		const message = getErrorMessage(error);
+		displayError("Error Fetching Meter Stats",message);
+	}
 
 	return (
 		<div className="w-full max-w-screen grid grid-cols-1 md:grid-cols-2 gap-8 mx-auto">
