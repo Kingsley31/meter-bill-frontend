@@ -121,3 +121,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* .data-\[state\=on\]\:text-accent-foreground[data-state="on"]{
+    color: oklch(1 0 0);
+}
+
+
+.data-\[state\=on\]\:bg-accent[data-state="on"] {
+    background-color: oklch(0.546 0.245 262.881);
+} */

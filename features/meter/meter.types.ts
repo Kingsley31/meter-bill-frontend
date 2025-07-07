@@ -6,6 +6,11 @@ export type SubMeter = {
   operator: Operaor;
 };
 
+export type MeterConsumptionChartData = {
+    month: string;
+    consumption: number;
+};
+
 export type Meter = {
   id: string;
   meterNumber: string;
