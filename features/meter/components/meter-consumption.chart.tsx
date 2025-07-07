@@ -79,7 +79,7 @@ export function MeterConsumptionChart({meterId}: MeterConsumptionChartProps) {
             <YAxis />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
+              content={(props) => (<ChartTooltipContent {...props} indicator="line" />)}
             />
             <Area
               type="natural"
