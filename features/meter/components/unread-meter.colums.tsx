@@ -65,7 +65,7 @@ export const unreadMeterColumns: ColumnDef<Meter>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem asChild>
-              <Link href={routes.meters.path+'/'+meter.id}>View Details</Link>
+              <Link href={routes.meters.path+'/'+meter.id}>Manage Details</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

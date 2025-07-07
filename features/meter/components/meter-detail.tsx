@@ -8,14 +8,14 @@ export type MeterDetailProp = {
     meter?: Meter;
     meterIsLoading: boolean;
     meterError?: string | null;
-    refetch?: () => void;
+    refetch: () => void;
 }
 export function MetailDetail({meter, meterIsLoading, meterError, refetch }: MeterDetailProp) {
     return (
         <main>
             <div className="flex items-center justify-between mx-4 my-2">
                 <h1 className="text-md font-semibold">Meter Details</h1>
-                {!(meterError) ? meterIsLoading ? (<Skeleton className="h-[30px] w-[80px] rounded-sm"/>):(<MeterStatus isActive={meter?.isActive} refetch={refetch}/>):""}
+                {!(meterError) ? meterIsLoading ? (<Skeleton className="h-[30px] w-[80px] rounded-sm"/>):(<MeterStatus meterId={meter?.id as string} isActive={meter?.isActive as boolean} refetch={refetch}/>):""}
             </div>
             <Card className={`shadow-${meter?.isActive ? "green-600": "destructive"}`}>
                 <CardContent>
