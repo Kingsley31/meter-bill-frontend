@@ -31,9 +31,9 @@ export default function MeterDtailPage({
                         refetch={refetch} 
                     />
                 </div>
-                <div className="h-10"></div>
+                <div className="h-14"></div>
                 <div className="w-full md:w-2xl mx-auto">
-                   {isLoading ? (<Skeleton className="w-full h-[250px]"/>): data && (<MeterManagementTab meter={data}/>)}
+                   {isLoading ? (<Skeleton className="w-full h-[250px]"/>): data && (<MeterManagementTab meter={data} refetch={refetch} />)}
                 </div>
             </div>
         </main>

@@ -21,10 +21,11 @@ type PaginatedAsyncSelectProps = {
   setFormValue: SetFormValue;
   loadOptions: LoadOptions;
   placeholder?: string;
+  defaultValue?: OptionType;
 };
 
-const PaginatedAsyncSelect = ({setFormValue, loadOptions, placeholder }:PaginatedAsyncSelectProps) => {
-  const [value, setValue] = useState<OptionType | null>(null);
+const PaginatedAsyncSelect = ({setFormValue, loadOptions, defaultValue ,placeholder}:PaginatedAsyncSelectProps) => {
+  const [value, setValue] = useState<OptionType | null>(defaultValue??null);
 
   return (
     <AsyncPaginate<OptionType, GroupBase<OptionType>, Additional>
