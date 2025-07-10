@@ -1,4 +1,3 @@
-import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import { MeterConsumptionChartData } from "../meter.types";
 
 export type MeterConsumptionChartFilter = {
