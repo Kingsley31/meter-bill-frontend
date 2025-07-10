@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { listMeters, ListMeterFilters } from "../api/list-meter.api";
 import { PaginatedResponse } from "@/types/paginated.respone.type";
-import { Meter } from "../../../features/meter/meter.types";
+import { Meter } from "../types";
 
 export function useListMeter(filters: ListMeterFilters) {
   return useQuery<PaginatedResponse<Meter>>({
