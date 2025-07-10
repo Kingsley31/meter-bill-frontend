@@ -1,5 +1,5 @@
+import { MeterPurpose, MeterType, Operaor } from "@/shared/meter/enums"
 import { z } from "zod"
-import { MeterPurpose, MeterType, Operaor } from "../meter.enums"
 
 export const createMeterSchema = z.object({
     meterNumber: z.string().min(1, "Meter number is required"),

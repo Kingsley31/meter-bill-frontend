@@ -8,7 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, useFieldArray } from "react-hook-form"
 import { Separator } from "@/components/ui/separator"
-import { MeterPurpose, MeterType, Operaor } from "../meter.enums"
 import { createMeterSchema, CreateMeterFormValues } from "../validations/create-meter.schema"
 import { subMeterOperators } from "../data"
 
@@ -16,6 +15,7 @@ import PaginatedAsyncSelect, { LoadOptions, OptionType } from "@/components/pagi
 import { useCreateMeter } from "../hooks/use-create-meter.hook"
 import { getErrorMessage } from "@/lib/utils"
 import { displayError, displaySuccess } from "@/components/display-message"
+import { MeterPurpose, MeterType, Operaor } from "@/shared/meter/enums"
 
 type CreateMeterFormProps = {
     loadAreaOptions: LoadOptions;
@@ -38,8 +38,9 @@ export function CreateMeterForm({ loadAreaOptions, loadMeterOptions }: CreateMet
         defaultValues: {
             meterNumber: "",
             areaId: "",
-            ctRating: 100,
-            ctMultiplierFactor: 1,
+            location: "",
+            ctRating: 0,
+            ctMultiplierFactor: 0,
             purpose: MeterPurpose.CONSUMER,
             type: MeterType.MEASUREMENT,
             calculationReferenceMeterId: "",
@@ -349,7 +350,13 @@ export function CreateMeterForm({ loadAreaOptions, loadMeterOptions }: CreateMet
                         )}
 					</CardContent>
                     <Separator />
-					<CardFooter className="flex justify-end items-center pt-2">
+					<CardFooter className="flex justify-between items-center pt-2">
+                        <Button 
+                            variant="outline" 
+                            disabled={form.formState.isSubmitting || createMeterMutation.status === "pending"}
+                            onClick={()=> form.reset()}>
+                            Cancel
+                        </Button>
                         <Button type="submit" disabled={form.formState.isSubmitting || createMeterMutation.status === "pending"}>
                             {form.formState.isSubmitting || createMeterMutation.status === "pending" ? "Creating..." : "Create Meter"}
                         </Button>

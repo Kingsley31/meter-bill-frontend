@@ -4,18 +4,17 @@ import { useForm, Controller } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MeterPurpose, MeterType } from "../meter.enums";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Filter, Search } from "lucide-react";
 import { useState } from "react";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useResourceOptions } from "@/hooks/use-resource-options";
-import { ResourceType } from "@/enums/resuorce-type";
 import PaginatedAsyncSelect, { OptionType } from "@/components/paginated-async-select";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { Popover as ShadPopover } from "@/components/ui/popover"; // alias to avoid conflict
+import { MeterPurpose, MeterType } from "@/shared/meter/enums";
+import { useAreaOptions } from "@/shared/area/hooks/use-area-options.hook";
 
 export type UnreadMeterFilterValues = {
   search?: string;
@@ -27,7 +26,7 @@ export type UnreadMeterFilterValues = {
 };
 
 export function FilterUnreadMeter() {
-  const { loadOptions: loadAreaOptions } = useResourceOptions(ResourceType.AREA);
+  const { loadOptions: loadAreaOptions } = useAreaOptions();
 
   const { register, handleSubmit, reset, control } = useForm<UnreadMeterFilterValues>();
   const [open, setOpen] = useState(false);

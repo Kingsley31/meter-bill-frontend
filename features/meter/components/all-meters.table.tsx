@@ -3,10 +3,10 @@
 import { DataTable } from "@/components/data-table";
 import { useSearchParams } from "next/navigation";
 import { meterColumns } from "./meter.colums";
-import { useListMeter } from "../hooks/use-list-meter.hook";
-import type { ListMeterFilters } from "../api/list-meter.api";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardAction } from "@/components/ui/card";
 import { FilterMeter } from "./filter-meter";
+import { ListMeterFilters } from "@/shared/meter/api/list-meter.api";
+import { useListMeter } from "@/shared/meter/hooks/use-list-meter.hook";
 
 export function AllMetersTable() {
   const searchParams = useSearchParams();

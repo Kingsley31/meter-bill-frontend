@@ -21,15 +21,14 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LandPlot } from "lucide-react"
 import { assignMeterAreaFormSchema, AssignMeterAreaFormValues } from "../validations/assign-meter-area.schema"
-import { ResourceType } from "@/enums/resuorce-type"
-import { Meter } from "../meter.types"
-import { useResourceOptions } from "@/hooks/use-resource-options"
 import PaginatedAsyncSelect, { OptionType } from "@/components/paginated-async-select"
 import { useState } from "react"
 import { useAssignMeterArea } from "../hooks/use-assign-meter-area.hook"
 import { displayError, displaySuccess } from "@/components/display-message"
 import { getErrorMessage } from "@/lib/utils"
 import { toast } from "sonner"
+import { Meter } from "@/shared/meter/types"
+import { useAreaOptions } from "@/shared/area/hooks/use-area-options.hook"
 
 export type AssignMeterAreaProps = {
     meter: Meter;
@@ -37,7 +36,7 @@ export type AssignMeterAreaProps = {
 }
 
 export function AssignMeterArea({ meter, refetch }: AssignMeterAreaProps) {
-    const {loadOptions:loadAreaOptions} =  useResourceOptions(ResourceType.AREA);
+    const {loadOptions:loadAreaOptions} =  useAreaOptions();
     const [areaName, setAreaName] = useState<string>("");
     const form = useForm<AssignMeterAreaFormValues>({
         resolver: zodResolver(assignMeterAreaFormSchema),
@@ -66,7 +65,7 @@ export function AssignMeterArea({ meter, refetch }: AssignMeterAreaProps) {
         },
         onError: (error: unknown) => {
             const message = getErrorMessage(error);
-            displayError("Failed to create meter", message);
+            displayError("Failed to assign meter to area", message);
         }
     });
   }

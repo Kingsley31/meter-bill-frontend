@@ -1,6 +1,7 @@
 import { apiClient } from "@/lib/http-client";
-import { Meter } from "../meter.types";
-import { MeterPurpose, MeterType, Operaor } from "../meter.enums";
+import { MeterPurpose, MeterType, Operaor } from "@/shared/meter/enums";
+import { Meter } from "@/shared/meter/types";
+
 
 export type CreateMeterPayload = {
   meterNumber: string;

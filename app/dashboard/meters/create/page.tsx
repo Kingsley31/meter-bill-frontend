@@ -1,16 +1,16 @@
 "use client"
 import { CreateMeterForm } from "@/features/meter/components/create-meter.form";
 import NavbarDB from "../../components/navbar";
-import { useResourceOptions } from "@/hooks/use-resource-options";
-import { ResourceType } from "@/enums/resuorce-type";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { EyeIcon } from "lucide-react";
 import { routes } from "@/data/routes";
+import { useAreaOptions } from "@/shared/area/hooks/use-area-options.hook";
+import { useMeterOptions } from "@/shared/meter/hooks/use-meter-options.hook";
 
 export default function CreateMeterPage() {
-        const {loadOptions:loadAreaOptions} =  useResourceOptions(ResourceType.AREA);
-        const {loadOptions:loadMeterOptions} = useResourceOptions(ResourceType.METER);
+        const {loadOptions:loadAreaOptions} =  useAreaOptions();
+        const {loadOptions:loadMeterOptions} = useMeterOptions();
     return (
         <main>
             <NavbarDB title="Create Meter">

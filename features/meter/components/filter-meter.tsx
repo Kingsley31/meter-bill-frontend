@@ -4,15 +4,14 @@ import { useForm, Controller } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MeterPurpose, MeterType } from "../meter.enums";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Filter, Search } from "lucide-react";
 import { useState } from "react";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useResourceOptions } from "@/hooks/use-resource-options";
-import { ResourceType } from "@/enums/resuorce-type";
 import PaginatedAsyncSelect, { OptionType } from "@/components/paginated-async-select";
+import { MeterPurpose, MeterType } from "@/shared/meter/enums";
+import { useAreaOptions } from "@/shared/area/hooks/use-area-options.hook";
 
 export type MeterFilterValues = {
   search?: string;
@@ -23,7 +22,7 @@ export type MeterFilterValues = {
 
 export function FilterMeter() {
   // Example options, replace with your actual options or fetch from context/store
- const { loadOptions: loadAreaOptions} = useResourceOptions(ResourceType.AREA);
+ const { loadOptions: loadAreaOptions} = useAreaOptions();
 
   const { register, handleSubmit, reset, control } = useForm<MeterFilterValues>();
   const [open, setOpen] = useState(false);

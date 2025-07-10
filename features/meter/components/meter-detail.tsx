@@ -1,8 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { MeterStatus } from "./meter-status";
-import { Meter } from "../meter.types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
+import { Meter } from "@/shared/meter/types";
 
 export type MeterDetailProp = {
     meter?: Meter;
@@ -64,6 +64,16 @@ export function MetailDetail({meter, meterIsLoading, meterError, refetch }: Mete
                             <span className="text-sm font-medium">Current Reading:</span>
                             {meterIsLoading ? (<Skeleton className="h-[20px] w-[70px] rounded-sm"/>):(
                             <span className="text-sm">{meter?.currentKwhReading ?? "0"} kWh</span>)}
+                        </div>
+                        <div className="flex items-center justify-between md:border-r md:pr-4 md:pb-4">
+                            <span className="text-sm font-medium">Customer:</span>
+                            {meterIsLoading ? (<Skeleton className="h-[20px] w-[70px] rounded-sm"/>):(
+                            <span className="text-sm">{meter?.customerName ?? "N/A"}</span>)}
+                        </div>
+                        <div className="flex items-center justify-between md:border-l md:pl-4 md:pb-4">
+                            <span className="text-sm font-medium">Tariff (₦):</span>
+                            {meterIsLoading ? (<Skeleton className="h-[20px] w-[70px] rounded-sm"/>):(
+                            <span className="text-sm">{meter?.tariff ?? "N/A"}</span>)}
                         </div>
                         <div className="flex items-center justify-between md:border-r md:pr-4 md:pb-4">
                             <span className="text-sm font-medium">Status:</span>

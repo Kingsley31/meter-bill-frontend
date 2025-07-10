@@ -1,8 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Meter } from "../meter.types";
-import { MeterType } from "../meter.enums";
 import { AssignMeterArea } from "./assign-meter-area.form";
 import { AssignMeterCustomer } from "./assign-meter-customer.form";
+import { Meter } from "@/shared/meter/types";
+import { MeterType } from "@/shared/meter/enums";
 
 
 export type MeterManagementTabProps = {

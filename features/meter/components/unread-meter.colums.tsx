@@ -1,5 +1,4 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { Meter } from "../meter.types";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
@@ -7,6 +6,7 @@ import { routes } from "@/data/routes";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
+import { Meter } from "@/shared/meter/types";
 
 export const unreadMeterColumns: ColumnDef<Meter>[] = [
   {

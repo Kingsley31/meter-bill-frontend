@@ -23,8 +23,12 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { cn } from "@/lib/utils"
-import { Meter } from "../meter.types"
+import { cn, getErrorMessage } from "@/lib/utils"
+import { Meter } from "@/shared/meter/types"
+import { useListCustomer } from "@/shared/customer/hooks/use-list-customer.hook"
+import { useAssignMeterCustomer } from "../hooks/use-assign-meter-customer.hook"
+import { toast } from "sonner"
+import { displayError, displaySuccess } from "@/components/display-message"
 
 const formSchema = z.object({
   customerId: z.string().min(1, "Please select a customer."),
@@ -32,19 +36,9 @@ const formSchema = z.object({
 
 type AssignCustomerFormValues = z.infer<typeof formSchema>
 
-type Customer = {
-  id: string
-  name: string
-  email: string
-  address?: string
-}
 
-const mockCustomers: Customer[] = Array.from({ length: 50 }).map((_, i) => ({
-  id: `cust-${i + 1}`,
-  name: `Customer ${i + 1}`,
-  email: `cust${i + 1}@email.com`,
-  address: `Block ${i + 1}, Utility Rd.`,
-}))
+
+
 
 export type AssignMeterCustomerProps = {
     meter: Meter;
@@ -59,25 +53,33 @@ export function AssignMeterCustomer({ meter, refetch}: AssignMeterCustomerProps)
     },
   })
 
+  const [customerName, setCustomerName] = useState("");
   const [query, setQuery] = useState("")
   const [page, setPage] = useState(1)
-  const perPage = 5
+  const pageSize = 5
 
-  const filteredCustomers = mockCustomers.filter((cust) =>
-    `${cust.name} ${cust.email} ${cust.address}`
-      .toLowerCase()
-      .includes(query.toLowerCase())
-  )
+  const { data, isLoading, isError, refetch: refetchCustomers } = useListCustomer({search: query, page: page, pageSize: pageSize});
 
-  const paginatedCustomers = filteredCustomers.slice(
-    (page - 1) * perPage,
-    page * perPage
-  )
+  const assignCustomerMutation = useAssignMeterCustomer();
 
-  const hasNextPage = page * perPage < filteredCustomers.length
+
 
   const handleSubmit = (data: AssignCustomerFormValues) => {
-    console.log("Assigned Customer:", data)
+        if (data.customerId == meter.customerId) {
+            toast.error('Meter is already assigned to this customer')
+            return;
+        }
+        assignCustomerMutation.mutate({customerId: data.customerId, custmerName: customerName, meterId: meter.id}, {
+            onSuccess: () => {
+                displaySuccess("Meter Assigned successfully", `Meter ${meter.meterNumber} has been assigned to ${customerName}.`);
+                form.reset();
+                refetch();
+            },
+            onError: (error: unknown) => {
+                const message = getErrorMessage(error);
+                displayError("Failed to assign meter to customer", message);
+            }
+        });
   }
 
   return (
@@ -97,7 +99,7 @@ export function AssignMeterCustomer({ meter, refetch}: AssignMeterCustomerProps)
               name="customerId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Select Customer</FormLabel>
+                  <FormLabel>Search Customer</FormLabel>
                   <FormControl>
                     <div className="space-y-2">
                       <Input
@@ -108,16 +110,25 @@ export function AssignMeterCustomer({ meter, refetch}: AssignMeterCustomerProps)
                           setPage(1)
                         }}
                       />
+
                       <ScrollArea className="h-64 border rounded-md p-1">
-                        {paginatedCustomers.length > 0 ? (
-                          paginatedCustomers.map((cust) => (
+                        {isLoading ? (
+                          <div className="p-2 text-sm text-muted-foreground">
+                            Loading customers...
+                          </div>
+                        ) : isError ? (
+                          <div className="p-2 text-red-500 text-sm">
+                            Failed to load customers. <span className="font-bold cursor-pointer" onClick={()=> refetchCustomers()}><u>reload</u></span>
+                          </div>
+                        ) : data && data.data.length > 0 ? (
+                          data.data.map((cust) => (
                             <div
                               key={cust.id}
                               className={cn(
                                 "p-2 rounded-md cursor-pointer hover:bg-muted transition-colors",
                                 field.value === cust.id && "bg-primary/10"
                               )}
-                              onClick={() => field.onChange(cust.id)}
+                              onClick={() => {field.onChange(cust.id); setCustomerName(cust.name);}}
                             >
                               <div className="font-medium">{cust.name}</div>
                               <div className="text-sm text-muted-foreground">
@@ -129,7 +140,7 @@ export function AssignMeterCustomer({ meter, refetch}: AssignMeterCustomerProps)
                             </div>
                           ))
                         ) : (
-                          <div className="p-2 text-muted-foreground text-sm">
+                          <div className="p-2 text-sm text-muted-foreground">
                             No customers found.
                           </div>
                         )}
@@ -140,7 +151,7 @@ export function AssignMeterCustomer({ meter, refetch}: AssignMeterCustomerProps)
                           type="button"
                           variant="outline"
                           size="sm"
-                          onClick={() => setPage((p) => Math.max(p - 1, 1))}
+                          onClick={() => setPage((p) => Math.max(1, p - 1))}
                           disabled={page === 1}
                         >
                           Previous
@@ -150,7 +161,7 @@ export function AssignMeterCustomer({ meter, refetch}: AssignMeterCustomerProps)
                           variant="outline"
                           size="sm"
                           onClick={() => setPage((p) => p + 1)}
-                          disabled={!hasNextPage}
+                          disabled={!data?.hasMore}
                         >
                           Next
                         </Button>
@@ -162,9 +173,21 @@ export function AssignMeterCustomer({ meter, refetch}: AssignMeterCustomerProps)
               )}
             />
           </CardContent>
-          <CardFooter className="justify-end mt-6 border-t">
-            <Button type="submit" disabled={!form.watch("customerId")}>
-              Assign Customer
+
+          <CardFooter className="flex justify-between items-center mt-6">
+            <Button 
+                variant="outline" 
+                disabled={form.formState.isSubmitting || assignCustomerMutation.isPending}
+                onClick={()=> form.reset() }>
+                Cancel
+            </Button>
+            <Button
+              type="submit"
+              disabled={
+                !form.watch("customerId") || assignCustomerMutation.isPending
+              }
+            >
+              {assignCustomerMutation.isPending ? "Assigning..." : "Assign Customer"}
             </Button>
           </CardFooter>
         </form>
