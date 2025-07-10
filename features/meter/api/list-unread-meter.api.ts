@@ -1,6 +1,6 @@
 import { apiClient } from "@/lib/http-client";
+import { Meter } from "@/shared/meter/types";
 import { PaginatedResponse } from "@/types/paginated.respone.type";
-import { Meter } from "../meter.types";
 
 export type ListUnreadMeterFilters = {
   search?: string;
