@@ -1,5 +1,5 @@
 import { apiClient } from "@/lib/http-client";
-import { Meter } from "../meter.types";
+import { Meter } from "@/shared/meter/types";
 
 export type GetMeterProps = {
     meterId: string;
