@@ -3,6 +3,7 @@ import { AssignMeterArea } from "./assign-meter-area.form";
 import { AssignMeterCustomer } from "./assign-meter-customer.form";
 import { Meter } from "@/shared/meter/types";
 import { MeterType } from "@/shared/meter/enums";
+import { SetMeterTariff } from "./set-meter-tariff.form";
 
 
 export type MeterManagementTabProps = {
@@ -23,7 +24,7 @@ export function MeterManagementTab({meter, refetch }: MeterManagementTabProps) {
             <TabsContent value="customer"><AssignMeterCustomer meter={meter} refetch={refetch}/></TabsContent>
             {(meter.type == MeterType.DERIVED) && (<TabsContent value="calculate-reading">Calculate meter reading here.</TabsContent>)}
             {(meter.type == MeterType.MEASUREMENT) && (<TabsContent value="reading">Manage meter reading here.</TabsContent>)}
-            <TabsContent value="tarrif">Change meter tarrif here.</TabsContent>
+            <TabsContent value="tarrif"><SetMeterTariff meter={meter} refetch={refetch} /></TabsContent>
         </Tabs>
     );
 }

@@ -71,7 +71,7 @@ export function MetailDetail({meter, meterIsLoading, meterError, refetch }: Mete
                             <span className="text-sm">{meter?.customerName ?? "N/A"}</span>)}
                         </div>
                         <div className="flex items-center justify-between md:border-l md:pl-4 md:pb-4">
-                            <span className="text-sm font-medium">Tariff (₦):</span>
+                            <span className="text-sm font-medium">Tariff (₦ / kwh):</span>
                             {meterIsLoading ? (<Skeleton className="h-[20px] w-[70px] rounded-sm"/>):(
                             <span className="text-sm">{meter?.tariff ?? "N/A"}</span>)}
                         </div>
