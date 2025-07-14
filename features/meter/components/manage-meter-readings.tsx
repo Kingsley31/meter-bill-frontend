@@ -64,7 +64,7 @@ const refetchAll = () => {
           <DataTable
             columns={meterReadingColumns}
             data={data?.data || []}
-            emptyMessage="No meters found."
+            emptyMessage="No meter readings found."
             loading={isLoading}
             skeletonRows={5}
             pagination={{
