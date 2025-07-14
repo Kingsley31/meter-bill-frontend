@@ -34,6 +34,7 @@ interface DataTableProps<TData, TValue> {
   loading?: boolean;
   skeletonRows?: number;
   pagination: PaginationState;
+  setPagination?: (page: number, pageSize: number) => void,
   error?: unknown;
   onRetry?: () => void;
 }
@@ -45,6 +46,7 @@ export function DataTable<TData, TValue>({
   loading = false,
   skeletonRows = 5,
   pagination,
+  setPagination,
   error,
   onRetry,
 }: DataTableProps<TData, TValue>) {
@@ -68,6 +70,10 @@ export function DataTable<TData, TValue>({
 
   // Update URL query params for pagination
   const setPage = (pageIndex: number) => {
+    if (setPagination) {
+      setPagination((pageIndex + 1),pagination.pageSize);
+      return;
+    }
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", (pageIndex + 1).toString()); // 1-based for URL
     params.set("pageSize", pagination.pageSize.toString());

@@ -1,0 +1,1 @@
+export const MAX_METER_IMAGE_SIZE_BYTES = 1000000;
