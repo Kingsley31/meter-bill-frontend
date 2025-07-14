@@ -46,7 +46,7 @@ export function MetailDetail({meter, meterIsLoading, meterError, refetch }: Mete
                             <span className="text-sm">{meter?.ctRating ?? "0"}</span>)}
                         </div>
                         <div className="flex items-center justify-between md:border-r md:pr-4 md:pb-4">
-                            <span className="text-sm font-medium">CT Multiplier Factor:</span>
+                            <span className="text-sm font-medium">Multiplier Factor:</span>
                             {meterIsLoading ? (<Skeleton className="h-[20px] w-[70px] rounded-sm"/>):(
                             <span className="text-sm">{meter?.ctMultiplierFactor ?? "0"}</span>)}
                         </div>

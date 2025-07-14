@@ -26,7 +26,7 @@ export const meterColumns: ColumnDef<Meter>[] = [
   },
   {
     accessorKey: "ctMultiplierFactor",
-    header: "CT Multiplier",
+    header: "Multiplier Factor",
     cell: ({ row }) => row.original.ctMultiplierFactor,
   },
   {

@@ -18,7 +18,7 @@ export function MeterManagementTab({meter, refetch }: MeterManagementTabProps) {
                 <TabsTrigger value="area" className="data-[state=active]:bg-primary data-[state=active]:text-white">Assign Area</TabsTrigger>
                 <TabsTrigger value="customer" className="data-[state=active]:bg-primary data-[state=active]:text-white">Assign Customer</TabsTrigger>
                 <TabsTrigger value="tarrif" className="data-[state=active]:bg-primary data-[state=active]:text-white">Set Tarrif</TabsTrigger>
-                {(meter.type == MeterType.DERIVED) && (<TabsTrigger value="calculate-reading" className="data-[state=active]:bg-primary data-[state=active]:text-white">Calculate Reading</TabsTrigger>)}
+                {(meter.type == MeterType.DERIVED) && (<TabsTrigger value="calculate-reading" className="data-[state=active]:bg-primary data-[state=active]:text-white">Calculate Consumption</TabsTrigger>)}
                 {(meter.type == MeterType.MEASUREMENT) && (<TabsTrigger value="reading" className="data-[state=active]:bg-primary data-[state=active]:text-white">Manage Readings</TabsTrigger>)}
             </TabsList>
             <TabsContent value="area"><AssignMeterArea meter={meter} refetch={refetch}/></TabsContent>

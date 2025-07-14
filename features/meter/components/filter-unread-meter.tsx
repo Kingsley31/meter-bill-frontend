@@ -23,6 +23,7 @@ export type UnreadMeterFilterValues = {
   purpose?: MeterPurpose;
   startDate?: string;
   endDate?: string;
+  pageSize?: string;
 };
 
 export function FilterUnreadMeter() {
@@ -220,6 +221,16 @@ export function FilterUnreadMeter() {
                 )}
               />
             </div>
+          </div>
+          <div>
+            <label className="block text-xs font-semibold mb-1 text-muted-foreground">Total Records</label>
+            <Controller
+              control={control}
+              name="pageSize"
+              render={({ field }) => (
+                  <Input type="number" placeholder="Total Records" {...field} value={field.value ?? ""}/>
+              )}
+            />
           </div>
           <div className="flex gap-2 justify-end pt-2">
             <Button

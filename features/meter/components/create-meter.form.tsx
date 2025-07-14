@@ -117,7 +117,7 @@ export function CreateMeterForm({ loadAreaOptions, loadMeterOptions }: CreateMet
 								name="ctMultiplierFactor"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>CT Multiplier Factor<span className="text-red-600">*</span></FormLabel>
+										<FormLabel>Multiplier Factor<span className="text-red-600">*</span></FormLabel>
 										<FormControl>
 											<Input type="number" step="0.01" placeholder="CT Multiplier" {...field} />
 										</FormControl>

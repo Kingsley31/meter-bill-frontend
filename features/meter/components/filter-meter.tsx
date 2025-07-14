@@ -18,6 +18,7 @@ export type MeterFilterValues = {
   areaId?: string;
   type?: MeterType;
   purpose?: MeterPurpose;
+  pageSize?: string;
 };
 
 export function FilterMeter() {
@@ -136,6 +137,16 @@ export function FilterMeter() {
                         <SelectItem value={MeterPurpose.BULK}>Bulk</SelectItem>
                       </SelectContent>
                     </Select>
+                  )}
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold mb-1 text-muted-foreground">Total Records</label>
+                <Controller
+                  control={control}
+                  name="pageSize"
+                  render={({ field }) => (
+                     <Input type="number" placeholder="Total Records" {...field} value={field.value ?? ""}/>
                   )}
                 />
               </div>
