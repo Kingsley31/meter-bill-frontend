@@ -12,7 +12,7 @@ import { useListUnreadMeter } from "../hooks/use-list-unread-meter";
 export function UnreadMetersTable() {
   const searchParams = useSearchParams();
   const page = Number(searchParams.get("page") || 1);
-  const pageSize = Number(searchParams.get("pageSize") || 10);
+  const pageSize = Number(searchParams.get("pageSize") || 5);
 
   // Calculate default dates
   const today = new Date();

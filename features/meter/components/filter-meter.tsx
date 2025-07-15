@@ -52,14 +52,17 @@ export function FilterMeter() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          size="icon"
-          aria-label="Filter"
-          className="border-accent shadow-sm"
-        >
-          <Filter className="w-5 h-5" />
-        </Button>
+        <div className="flex items-center justify-center">
+          <p className="text-xs font-medium">Filter:&nbsp;&nbsp;</p>
+          <Button
+            variant="outline"
+            size="icon"
+            aria-label="Filter"
+            className="border-accent shadow-sm"
+          >
+            <Filter className="w-5 h-5" />
+          </Button>
+        </div>
       </PopoverTrigger>
       <PopoverContent className="w-full md:w-sm max-w-full p-6 rounded-xl shadow-lg border bg-white" align="start">
         <form

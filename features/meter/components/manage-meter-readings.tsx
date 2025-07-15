@@ -25,7 +25,7 @@ type ManageMeterReadingsProps = {
 }
 
 export function ManageMeterReadings({ meter, refetch: refetchMeter }: ManageMeterReadingsProps) {
-  const [filters, setFilter] = useState<ListMeterReadingsFilters>({meterId: meter.id, pageSize: 10, page: 1});
+  const [filters, setFilter] = useState<ListMeterReadingsFilters>({meterId: meter.id, pageSize: 5, page: 1});
 
 
   const { data, isLoading, error, refetch } = useListMeterReading(filters);

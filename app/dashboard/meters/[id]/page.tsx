@@ -17,7 +17,7 @@ export default function MeterDtailPage({
     const { data, isLoading, error, refetch } = useGetMeter({meterId: id});
     return (
         <main>
-            <NavbarDB title="Meter Details"/>
+            <NavbarDB title="Meter Details" showBackBtn/>
             <div className="my-8 mx-4 md:mx-auto">
                 <div className="w-full md:w-2xl mx-auto">
                     <MeterConsumptionChart meterId={id}/>

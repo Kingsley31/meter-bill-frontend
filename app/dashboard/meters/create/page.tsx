@@ -13,7 +13,7 @@ export default function CreateMeterPage() {
         const {loadOptions:loadMeterOptions} = useMeterOptions();
     return (
         <main>
-            <NavbarDB title="Create Meter">
+            <NavbarDB title="Create Meter" showBackBtn>
                 <Button asChild><Link href={routes.meters.path}>View Meters<EyeIcon/></Link></Button>
             </NavbarDB>
             <div className="px-auto py-8 max-w-4xl mx-auto">

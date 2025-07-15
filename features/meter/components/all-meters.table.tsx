@@ -11,7 +11,7 @@ import { useListMeter } from "@/shared/meter/hooks/use-list-meter.hook";
 export function AllMetersTable() {
   const searchParams = useSearchParams();
   const page = Number(searchParams.get("page") || 1);
-  const pageSize = Number(searchParams.get("pageSize") || 10);
+  const pageSize = Number(searchParams.get("pageSize") || 5);
 
   const filters: ListMeterFilters = {
     page,
