@@ -6,6 +6,8 @@ import { routes } from "@/data/routes";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Meter } from "@/shared/meter/types";
+import { CreateMeterReadingForm, MeterReadingFormTriggerType } from "./meter-reading.form";
+import { MeterType } from "@/shared/meter/enums";
 
 export const meterColumns: ColumnDef<Meter>[] = [
   {
@@ -14,11 +16,11 @@ export const meterColumns: ColumnDef<Meter>[] = [
     cell: ({ row }) => row.original.meterNumber,
   },
    
-  // {
-  //   accessorKey: "ctRating",
-  //   header: "CT Rating",
-  //   cell: ({ row }) => row.original.ctRating,
-  // },
+  {
+    accessorKey: "location",
+    header: "Location",
+    cell: ({ row }) => row.original.location,
+  },
   {
     accessorKey: "type",
     header: "Type",
@@ -67,11 +69,12 @@ export const meterColumns: ColumnDef<Meter>[] = [
               <MoreHorizontal />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent className="px-2" align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem asChild>
-              <Link href={routes.meters.path+'/'+meter.id}>Manage Details</Link>
+              <Button variant="ghost" asChild><Link href={routes.meters.path+'/'+meter.id}>View Details</Link></Button>
             </DropdownMenuItem>
+            {(meter.type == MeterType.MEASUREMENT) &&(<DropdownMenuItem asChild><CreateMeterReadingForm triggerType={MeterReadingFormTriggerType.MENU} meter={meter} refetch={()=>{}}/></DropdownMenuItem>)}
           </DropdownMenuContent>
         </DropdownMenu>
       )

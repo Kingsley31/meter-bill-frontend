@@ -26,7 +26,12 @@ export type UnreadMeterFilterValues = {
   pageSize?: string;
 };
 
-export function FilterUnreadMeter() {
+export type FilterUnreadMeterProps = {
+  defaultStartDate: string;
+  defaultEndDate: string;
+}
+
+export function FilterUnreadMeter({defaultStartDate, defaultEndDate}: FilterUnreadMeterProps) {
   const { loadOptions: loadAreaOptions } = useAreaOptions();
 
   const { register, handleSubmit, reset, control } = useForm<UnreadMeterFilterValues>();
@@ -167,13 +172,13 @@ export function FilterUnreadMeter() {
                       >
                         {field.value
                           ? format(new Date(field.value), "PPP")
-                          : "Pick a date"}
+                          : defaultStartDate}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent align="start" className="p-0">
                       <Calendar
                         mode="single"
-                        selected={field.value ? new Date(field.value) : undefined}
+                        selected={field.value ? new Date(field.value) : new Date(defaultStartDate)}
                         onSelect={(date: Date | undefined) => {
                           field.onChange(date ? date.toISOString(): "");
                           setStartCalenderOpen(false);
@@ -203,18 +208,18 @@ export function FilterUnreadMeter() {
                       >
                         {field.value
                           ? format(new Date(field.value), "PPP")
-                          : "Pick a date"}
+                          : defaultEndDate}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent align="start" className="p-0">
                       <Calendar
                         mode="single"
-                        selected={field.value ? new Date(field.value) : undefined}
+                        selected={field.value ? new Date(field.value) : new Date(defaultEndDate)}
                         onSelect={(date: Date | undefined) => {
                           field.onChange(date ? date.toISOString(): "");
                           setEndCalenderOpen(false);
                         }}
-                        initialFocus
+                        autoFocus
                       />
                     </PopoverContent>
                   </ShadPopover>

@@ -17,7 +17,7 @@ export function UnreadMetersTable() {
   // Calculate default dates
   const today = new Date();
   const defaultEndDate = format(today, "yyyy-MM-dd");
-  const defaultStartDate = format(subDays(today, 30), "yyyy-MM-dd");
+  const defaultStartDate = format(subDays(today, 7), "yyyy-MM-dd");
 
   const startDateParam = searchParams.get("startDate")?.trim() || defaultStartDate;
   const endDateParam = searchParams.get("endDate")?.trim() || defaultEndDate;
@@ -51,7 +51,7 @@ export function UnreadMetersTable() {
         <CardDescription>
           View, filter, and manage all unread electric meters in the system.
         </CardDescription>
-        <CardAction><FilterUnreadMeter /></CardAction>
+        <CardAction><FilterUnreadMeter defaultStartDate={defaultStartDate} defaultEndDate={defaultEndDate}/></CardAction>
       </CardHeader>
       <CardContent>
         <DataTable

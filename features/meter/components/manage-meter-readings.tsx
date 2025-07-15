@@ -11,7 +11,7 @@ import {
 import { Meter } from "@/shared/meter/types"
 
 
-import { CreateMeterReadingForm } from "./meter-reading.form"
+import { CreateMeterReadingForm, MeterReadingFormTriggerType } from "./meter-reading.form"
 import { DataTable } from "@/components/data-table"
 import { meterReadingColumns } from "./meter-reading.colums"
 import { ListMeterReadingsFilters } from "../api/list-meter-readings.api"
@@ -25,7 +25,7 @@ type ManageMeterReadingsProps = {
 }
 
 export function ManageMeterReadings({ meter, refetch: refetchMeter }: ManageMeterReadingsProps) {
-  const [filters, setFilter] = useState<ListMeterReadingsFilters>({meterId: meter.id, pageSize: 20, page: 1});
+  const [filters, setFilter] = useState<ListMeterReadingsFilters>({meterId: meter.id, pageSize: 10, page: 1});
 
 
   const { data, isLoading, error, refetch } = useListMeterReading(filters);
@@ -57,7 +57,7 @@ const refetchAll = () => {
 
       <CardContent className="space-y-4">
         <div className="flex w-full justify-end items-end">
-          <CreateMeterReadingForm meter={meter} refetch={refetchAll}/>
+          <CreateMeterReadingForm triggerType={MeterReadingFormTriggerType.BUTTON} meter={meter} refetch={refetchAll}/>
         </div>
         <div>
           <p className="text-sm font-medium mb-2">Reading History</p>

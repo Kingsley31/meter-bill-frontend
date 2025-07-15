@@ -1,34 +1,23 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { MeterReading } from "../meter.types";
 import { format } from "date-fns";
-import { ImageIcon } from "lucide-react";
 
-export const meterReadingColumns: ColumnDef<MeterReading>[] = [
-  {
-    accessorKey: "kwhReading",
-    header: "Kwh Reading",
-    cell: ({ row }) => row.original.kwhReading,
-  },
-  {
-    accessorKey: "readingDate",
-    header: "Reading Date",
-    cell: ({ row }) => format(new Date(row.original.readingDate), "PPP"),
-  },
+export const meterConsumptionColumns: ColumnDef<MeterReading>[] = [
   {
     accessorKey: "kwhConsumption",
     header: "Kwh Consumption",
     cell: ({ row }) => row.original.kwhConsumption,
   },
   {
-    accessorKey: "meterImage",
-    header: "Meter Image",
-    cell: ({ row }) => <a href={row.original.meterImage} target="blank"><ImageIcon strokeWidth={1}/></a>,
+    accessorKey: "readingDate",
+    header: "Calculated Date",
+    cell: ({ row }) => format(new Date(row.original.readingDate), "PPP"),
   },
-  {
-    accessorKey: "createdAt",
-    header: "Date Entered",
-    cell: ({ row }) => format(new Date(row.original.createdAt), "PPP"),
-  },
+  // {
+  //   accessorKey: "createdAt",
+  //   header: "Date Entered",
+  //   cell: ({ row }) => format(new Date(row.original.createdAt), "PPP"),
+  // },
   // {
   //   accessorKey: "isActive",
   //   header: "Active",

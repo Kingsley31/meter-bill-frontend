@@ -80,13 +80,17 @@ const schema = z.object({
 })
 
 type FormValues = z.infer<typeof schema>;
-
+export enum MeterReadingFormTriggerType {
+  BUTTON = 'button',
+  MENU = 'menu'
+}
 type CreateMeterReadingFormProps = {
     meter: Meter;
     refetch: () => void;
+    triggerType: MeterReadingFormTriggerType;
 }
 
-export function CreateMeterReadingForm({meter, refetch}: CreateMeterReadingFormProps) {
+export function CreateMeterReadingForm({meter, refetch, triggerType = MeterReadingFormTriggerType.BUTTON}: CreateMeterReadingFormProps) {
     const form = useForm<z.infer<typeof schema>>({
         resolver: zodResolver(schema),
     })
@@ -145,7 +149,7 @@ export function CreateMeterReadingForm({meter, refetch}: CreateMeterReadingFormP
     return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Upload Reading</Button>
+        {triggerType == MeterReadingFormTriggerType.BUTTON ? (<Button>Enter Reading</Button>) : (<Button variant="ghost">Enter Reading</Button>)}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

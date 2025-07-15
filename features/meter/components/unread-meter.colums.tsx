@@ -7,12 +7,19 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { Meter } from "@/shared/meter/types";
+import { CreateMeterReadingForm, MeterReadingFormTriggerType } from "./meter-reading.form";
+import { MeterType } from "@/shared/meter/enums";
 
 export const unreadMeterColumns: ColumnDef<Meter>[] = [
   {
     accessorKey: "meterNumber",
     header: "Meter Number",
     cell: ({ row }) => row.original.meterNumber,
+  },
+  {
+    accessorKey: "location",
+    header: "Location",
+    cell: ({ row }) => row.original.location,
   },
   {
     accessorKey: "type",
@@ -65,8 +72,9 @@ export const unreadMeterColumns: ColumnDef<Meter>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem asChild>
-              <Link href={routes.meters.path+'/'+meter.id}>Manage Details</Link>
+              <Button variant="ghost" asChild><Link href={routes.meters.path+'/'+meter.id}>View Details</Link></Button>
             </DropdownMenuItem>
+            {(meter.type == MeterType.MEASUREMENT) &&(<DropdownMenuItem asChild><CreateMeterReadingForm triggerType={MeterReadingFormTriggerType.MENU} meter={meter} refetch={()=>{}}/></DropdownMenuItem>)}
           </DropdownMenuContent>
         </DropdownMenu>
       )
