@@ -5,7 +5,6 @@ import { ListMeterReadingsFilters } from "../api/list-meter-readings.api";
 import { useListMeterReading } from "../hooks/use-list-meter-reading.hook";
 import { DataTable } from "@/components/data-table";
 import { meterConsumptionColumns } from "./meter-consumption.colums";
-import { Separator } from "@/components/ui/separator";
 import { MeterConsumptionDerivation } from "./meter-consumption-derivation";
 
 
