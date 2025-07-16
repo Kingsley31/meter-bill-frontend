@@ -62,7 +62,7 @@ export function MeterStatistics() {
 			</Card>
 			<Card>
 				<CardHeader className="flex flex-row items-center justify-between pb-2">
-					<CardTitle className="text-sm font-medium">Total Consumption</CardTitle>
+					<CardTitle className="text-sm font-medium">Average Consumption</CardTitle>
 					<TrendingUp className="h-5 w-5 text-orange-600" />
 				</CardHeader>
 				<CardContent>
@@ -73,7 +73,7 @@ export function MeterStatistics() {
 						{data?.averageEnergyConsumption ? data?.averageEnergyConsumption.toLocaleString() : 0} kWh
 					</div>)}
 					<div className="text-xs text-muted-foreground mt-1">
-						Total kWh consumed by all meters
+						Average kWh consumed by all meters
 					</div>
 				</CardContent>
 			</Card>
