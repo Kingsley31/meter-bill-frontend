@@ -2,7 +2,7 @@
 
 import { DataTable } from "@/components/data-table";
 import { useSearchParams } from "next/navigation";
-import { meterColumns } from "./meter.colums";
+import { getAllMeterColumns } from "./meter.colums";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardAction } from "@/components/ui/card";
 import { FilterMeter } from "./filter-meter";
 import { ListMeterFilters } from "@/shared/meter/api/list-meter.api";
@@ -42,7 +42,7 @@ export function AllMetersTable() {
       </CardHeader>
       <CardContent>
         <DataTable
-          columns={meterColumns}
+          columns={getAllMeterColumns({refetch})}
           data={data?.data || []}
           emptyMessage="No meters found."
           loading={isLoading}
