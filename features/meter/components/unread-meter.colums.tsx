@@ -26,15 +26,20 @@ export const unreadMeterColumns: ColumnDef<Meter>[] = [
     header: "Type",
     cell: ({ row }) => <Badge variant="outline" className="text-muted-foreground px-1.5">{row.original.type}</Badge>,
   },
-  {
-    accessorKey: "ctMultiplierFactor",
-    header: "Multiplier",
-    cell: ({ row }) => row.original.ctMultiplierFactor,
-  },
+  // {
+  //   accessorKey: "ctMultiplierFactor",
+  //   header: "Multiplier",
+  //   cell: ({ row }) => row.original.ctMultiplierFactor,
+  // },
   {
     accessorKey: "currentKwhReadingDate",
     header: "Last Read",
     cell: ({ row }) => row.original.currentKwhReadingDate ? format(new Date(row.original.currentKwhReadingDate), "dd MMM yyyy") : "None",
+  },
+  {
+    accessorKey: "currentKwhReading",
+    header: "Last Reading(kWh)",
+    cell: ({ row }) => row.original.currentKwhReading ?? 0,
   },
   {
     accessorKey: "isActive",
