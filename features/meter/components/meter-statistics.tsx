@@ -73,7 +73,7 @@ export function MeterStatistics() {
 						{data?.averageEnergyConsumption ? data?.averageEnergyConsumption.toLocaleString() : 0} kWh
 					</div>)}
 					<div className="text-xs text-muted-foreground mt-1">
-						Average kWh consumed by all meters
+						Recent average kWh consumed by all meters
 					</div>
 				</CardContent>
 			</Card>
