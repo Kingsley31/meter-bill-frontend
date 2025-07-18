@@ -61,7 +61,7 @@ export function MeterConsumptionChart({meterId}: MeterConsumptionChartProps) {
             </Select>
         </CardAction>
       </CardHeader>
-      <CardContent className={!(error && isLoading)? "pl-0" : ""}>
+      <CardContent className={(error || isLoading)? "px-6":"pl-0"}>
         {error ? (<p className="mx-auto text-destructive text-sm">Error loading chart. <span className="font-bold cursor-pointer" onClick={()=> refetch()}><u>reload</u></span></p>): isLoading ? (<Skeleton className="h-[100px] rounded-sm"/>):(
         <ChartContainer config={chartConfig}>
           <AreaChart 

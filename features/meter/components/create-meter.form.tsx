@@ -100,6 +100,19 @@ export function CreateMeterForm({ loadAreaOptions, loadMeterOptions }: CreateMet
                                 )}
                             />
                             <FormField
+                                control={form.control}
+                                name="location"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Location<span className="text-red-600">*</span></FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="Enter meter location" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
 								control={form.control}
 								name="ctRating"
 								render={({ field }) => (
@@ -183,19 +196,6 @@ export function CreateMeterForm({ loadAreaOptions, loadMeterOptions }: CreateMet
                                     )}
                                 />
                             )}
-                            <FormField
-                                control={form.control}
-                                name="location"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Location<span className="text-red-600">*</span></FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Enter meter location" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
                             <FormField
                                 control={form.control}
                                 name="areaId"
