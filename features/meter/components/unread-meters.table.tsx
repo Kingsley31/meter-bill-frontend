@@ -2,7 +2,7 @@
 
 import { DataTable } from "@/components/data-table";
 import { useSearchParams } from "next/navigation";
-import { unreadMeterColumns } from "./unread-meter.colums";
+import { getUnreadMeterColumns } from "./unread-meter.colums";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardAction } from "@/components/ui/card";
 import { FilterUnreadMeter } from "./filter-unread-meter";
 import { ListUnreadMeterFilters } from "../api/list-unread-meter.api";
@@ -55,7 +55,7 @@ export function UnreadMetersTable() {
       </CardHeader>
       <CardContent>
         <DataTable
-          columns={unreadMeterColumns}
+          columns={getUnreadMeterColumns({refetch})}
           data={data?.data || []}
           emptyMessage="No unread meters found."
           loading={isLoading}
