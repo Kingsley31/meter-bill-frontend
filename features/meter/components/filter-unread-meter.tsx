@@ -114,8 +114,8 @@ export function FilterUnreadMeter({defaultStartDate, defaultEndDate}: FilterUnre
           </div>
           {/* Type and Purpose in one column */}
           <div>
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-              <div>
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-1">
+              {/* <div>
                 <label className="block text-xs font-semibold mb-1 text-muted-foreground">Type</label>
                 <Controller
                   control={control}
@@ -132,7 +132,7 @@ export function FilterUnreadMeter({defaultStartDate, defaultEndDate}: FilterUnre
                     </Select>
                   )}
                 />
-              </div>
+              </div> */}
               <div>
                 <label className="block text-xs font-semibold mb-1 text-muted-foreground">Purpose</label>
                 <Controller
