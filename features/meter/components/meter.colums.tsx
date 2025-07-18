@@ -62,6 +62,11 @@ export function getAllMeterColumns({refetch}: GetAllMetersColumsProps) {
       cell: ({ row }) => row.original.currentKwhReading ?? 0,
     },
     {
+      accessorKey: "currentKwhConsumption",
+      header: "Consumption kWh",
+      cell: ({ row }) => row.original.currentKwhConsumption ?? 0,
+    },
+    {
       id: "actions",
       header: "Actions",
       cell: ({ row }) => {
