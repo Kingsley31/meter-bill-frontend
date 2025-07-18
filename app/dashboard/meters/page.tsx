@@ -4,11 +4,7 @@ import Link from "next/link";
 import { routes } from "@/data/routes";
 import { PlusIcon } from "lucide-react";
 import { MeterStatistics } from "@/features/meter/components/meter-statistics";
-import { AllMetersTable } from "@/features/meter/components/all-meters.table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Suspense } from "react";
-import { LoadingTable } from "@/components/loading-table";
-import { UnreadMetersTable } from "@/features/meter/components/unread-meters.table";
+import { MetersTab } from "@/features/meter/components/meters.tab";
 
 export default function ListMeterPage() {
     return (
@@ -23,14 +19,7 @@ export default function ListMeterPage() {
                 <div className="w-full md:w-2xl mx-auto"><MeterStatistics /></div>
                 <div className="h-10"></div>
                 <div className="w-full md:w-2xl mx-auto">
-                    <Tabs defaultValue="all">
-                        <TabsList>
-                            <TabsTrigger value="all">All Meters</TabsTrigger>
-                            <TabsTrigger value="unread">Unread Meters</TabsTrigger>
-                        </TabsList>
-                        <TabsContent value="all"><Suspense fallback={<LoadingTable/>}><AllMetersTable /></Suspense></TabsContent>
-                        <TabsContent value="unread"><Suspense fallback={<LoadingTable/>}><UnreadMetersTable /></Suspense></TabsContent>
-                    </Tabs>
+                    <MetersTab/>
                 </div>
             </div>
         </main>
