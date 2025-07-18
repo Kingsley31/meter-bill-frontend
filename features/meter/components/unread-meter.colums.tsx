@@ -28,13 +28,13 @@ export const unreadMeterColumns: ColumnDef<Meter>[] = [
   },
   {
     accessorKey: "ctMultiplierFactor",
-    header: "CT Multiplier",
+    header: "Multiplier",
     cell: ({ row }) => row.original.ctMultiplierFactor,
   },
   {
     accessorKey: "currentKwhReadingDate",
     header: "Last Read",
-    cell: ({ row }) => row.original.currentKwhReadingDate ? format(new Date(row.original.currentKwhReadingDate), "dd MMM yyyy") : "N/A",
+    cell: ({ row }) => row.original.currentKwhReadingDate ? format(new Date(row.original.currentKwhReadingDate), "dd MMM yyyy") : "None",
   },
   {
     accessorKey: "isActive",
