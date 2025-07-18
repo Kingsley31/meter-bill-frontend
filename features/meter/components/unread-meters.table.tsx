@@ -49,7 +49,7 @@ export function UnreadMetersTable() {
       <CardHeader>
         <CardTitle>Unread Meters</CardTitle>
         <CardDescription>
-          View, filter, and manage all unread electric meters in the system.
+          List of unread meters from {format(startDateParam,"PP")} to {format(endDateParam,"PP")}.
         </CardDescription>
         <CardAction><FilterUnreadMeter defaultStartDate={defaultStartDate} defaultEndDate={defaultEndDate}/></CardAction>
       </CardHeader>
