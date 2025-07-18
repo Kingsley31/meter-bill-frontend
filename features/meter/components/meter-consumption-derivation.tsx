@@ -13,7 +13,7 @@ export type MeterConsumptionDerivationProps = {
 }
 
 export function MeterConsumptionDerivation({meter}: MeterConsumptionDerivationProps) {
-    const {data:referenceData ,error:erroReference,isLoading: isLoadingReference, refetch:refetchReference} = useGetMeter({meterId: meter.id});
+    const {data:referenceData ,error:erroReference,isLoading: isLoadingReference, refetch:refetchReference} = useGetMeter({meterId: meter.calculationReferenceMeterId!});
     const {data, error, isLoading, refetch} = useListDerivedMeterSubMeters({meterId: meter.id});
     return (
         <Dialog>
