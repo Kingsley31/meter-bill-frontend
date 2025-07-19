@@ -58,8 +58,8 @@ export function getAllMeterColumns({refetch}: GetAllMetersColumsProps) {
     },
     {
       accessorKey: "currentKwhReading",
-      header: "Current kWh",
-      cell: ({ row }) => row.original.currentKwhReading ?? 0,
+      header: "Reading kWh",
+      cell: ({ row }) =>  row.original.type == MeterType.DERIVED ? "N/A" : row.original.currentKwhReading ?? 0,
     },
     {
       accessorKey: "currentKwhConsumption",
