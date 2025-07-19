@@ -7,6 +7,7 @@ import { useGetMeter } from "../hooks/use-get-meter.hooks";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useListDerivedMeterSubMeters } from "../hooks/use-list-derived-meter-sub-meters.hooks";
 import { format } from "date-fns";
+import { Badge } from "@/components/ui/badge";
 
 export type MeterConsumptionDerivationProps = {
     meter: Meter;
@@ -45,7 +46,8 @@ export function MeterConsumptionDerivation({meter}: MeterConsumptionDerivationPr
                             <p className={`text-xs font-medium ${i > 0 ? "mt-4" : ""}`}>Meter Location: <span className="font-light">{sub.location}</span></p>
                             <p className={`text-xs font-medium mt-2`}>Meter Number: <span className="font-light">{sub.meterNumber}</span></p>
                             <p className={`text-xs font-medium mt-2`}>Last Read: <span className="font-light">{sub.currentKwhReadingDate ? format(new Date(sub.currentKwhReadingDate),"PPP"):"N/A"}</span></p>
-                            <p className="text-xs font-medium mt-2">Current Consumption(kwh): <span className="font-light">{sub.currentKwhConsumption ?? 0}</span></p>
+                             <p className="text-xs font-medium mt-2">Current Consumption(kwh): <span className="font-light">{sub.currentKwhConsumption ?? 0}</span></p>
+                            <p className="text-xs font-medium mt-2">Operator: <Badge className="text-sm font-bold">{meter.subMeters.find((subm) => subm.subMeterId == sub.id)!.operator}</Badge></p>
                             {(i < data.length - 1)&& <Separator className="mt-4"/>}
                             </div>)))}
                 </div>
