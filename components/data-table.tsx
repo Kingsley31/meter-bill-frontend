@@ -20,6 +20,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { AlertTriangle } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { Label } from "./ui/label";
 
 interface PaginationState {
   pageIndex: number; // zero-based
@@ -69,14 +72,14 @@ export function DataTable<TData, TValue>({
   });
 
   // Update URL query params for pagination
-  const setPage = (pageIndex: number) => {
+  const setPage = (pageIndex: number, pageSize: number = pagination.pageSize) => {
     if (setPagination) {
-      setPagination((pageIndex + 1),pagination.pageSize);
+      setPagination((pageIndex + 1),pageSize);
       return;
     }
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", (pageIndex + 1).toString()); // 1-based for URL
-    params.set("pageSize", pagination.pageSize.toString());
+    params.set("pageSize", pageSize.toString());
     router.replace(`?${params.toString()}`);
   };
 
@@ -168,19 +171,42 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="text-muted-foreground flex-1 text-sm">
+        <div className="hidden md:block text-muted-foreground flex-1 text-sm">
           {loading
             ? "Loading..."
             : `${data.length} of ${pagination.total} row(s) retrieved.`}
         </div>
         <div className="space-x-2 flex items-center">
+          <Label htmlFor="rows-per-page" className="text-xs text-muted-foreground">
+            Rows per page
+          </Label>
+          <Select
+                defaultValue={`${pagination.pageSize}`}
+                onValueChange={(value) => {
+                   setPage(pagination.pageIndex,Number(value));
+                }}
+              >
+            <SelectTrigger size="sm" id="rows-per-page">
+              <SelectValue
+                placeholder={pagination.pageSize}
+              />
+            </SelectTrigger>
+            <SelectContent side="top">
+              {[5,10, 20, 30, 40, 50].map((pageSize) => (
+                <SelectItem key={pageSize} value={`${pageSize}`}>
+                  {pageSize}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <Button
             variant="outline"
             size="sm"
             onClick={() => setPage(Math.max(0, pagination.pageIndex - 1))}
             disabled={pagination.pageIndex === 0 || loading}
           >
-            Previous
+            <span className="sr-only">Go to previous page</span>
+            <IconChevronLeft />
           </Button>
           <span className="text-xs text-muted-foreground">
             Page {pagination.pageIndex + 1} of {totalPages || 1}
@@ -191,7 +217,8 @@ export function DataTable<TData, TValue>({
             onClick={() => setPage(Math.min(totalPages - 1, pagination.pageIndex + 1))}
             disabled={pagination.pageIndex + 1 >= totalPages || loading}
           >
-            Next
+            <span className="sr-only">Go to next page</span>
+            <IconChevronRight />
           </Button>
         </div>
       </div>
