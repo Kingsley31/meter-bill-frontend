@@ -27,6 +27,11 @@ export function getAllMeterColumns({refetch}: GetAllMetersColumsProps) {
       cell: ({ row }) => row.original.location,
     },
     {
+      accessorKey: "areaName",
+      header: "Area",
+      cell: ({ row }) => row.original.areaName,
+    },
+    {
       accessorKey: "type",
       header: "Type",
       cell: ({ row }) => <Badge variant="outline" className="text-muted-foreground px-1.5">{row.original.type}</Badge>,
