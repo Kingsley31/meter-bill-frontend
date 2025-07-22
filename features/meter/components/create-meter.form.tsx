@@ -175,7 +175,7 @@ export function CreateMeterForm({ loadAreaOptions, loadMeterOptions }: CreateMet
                                                     className="mr-2"
                                                 />
                                             </FormControl>
-                                            <p>meter has max kwh reading</p>
+                                            <p className="overflow-x-auto">meter has max kwh reading</p>
                                         </div>
                                         <FormMessage />
                                     </FormItem>

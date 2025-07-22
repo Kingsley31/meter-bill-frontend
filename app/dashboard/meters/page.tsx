@@ -16,9 +16,9 @@ export default function ListMeterPage() {
                 </div>
             </NavbarDB>
             <div className="my-8 mx-4 md:mx-auto">
-                <div className="w-full md:w-2xl mx-auto"><MeterStatistics /></div>
+                <div className="w-full md:w-2xl lg:w-3xl mx-auto"><MeterStatistics /></div>
                 <div className="h-10"></div>
-                <div className="w-full md:w-2xl mx-auto">
+                <div className="w-full md:w-2xl lg:w-3xl mx-auto">
                     <MetersTab/>
                 </div>
             </div>
