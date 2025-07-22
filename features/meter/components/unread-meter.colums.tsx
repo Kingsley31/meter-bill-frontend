@@ -42,7 +42,7 @@ export function getUnreadMeterColumns({ refetch }: GetUnreadMeterColumsProps) {
       },
       {
         accessorKey: "currentKwhReading",
-        header: "Last Reading(kWh)",
+        header: "Last kWh",
         cell: ({ row }) => row.original.currentKwhReading ?? 0,
       },
       // {
