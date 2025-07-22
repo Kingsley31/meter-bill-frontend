@@ -45,21 +45,21 @@ export function getUnreadMeterColumns({ refetch }: GetUnreadMeterColumsProps) {
         header: "Last Reading(kWh)",
         cell: ({ row }) => row.original.currentKwhReading ?? 0,
       },
-      {
-        accessorKey: "isActive",
-        header: "Active",
-        cell: ({ row }) => (
-          <span
-            className={
-              row.original.isActive
-                ? "text-green-600 font-medium text-sm"
-                : "text-red-500 font-medium text-sm"
-            }
-          >
-            {row.original.isActive ? "Yes" : "No"}
-          </span>
-        ),
-      },
+      // {
+      //   accessorKey: "isActive",
+      //   header: "Active",
+      //   cell: ({ row }) => (
+      //     <span
+      //       className={
+      //         row.original.isActive
+      //           ? "text-green-600 font-medium text-sm"
+      //           : "text-red-500 font-medium text-sm"
+      //       }
+      //     >
+      //       {row.original.isActive ? "Yes" : "No"}
+      //     </span>
+      //   ),
+      // },
       {
         accessorKey: "purpose",
         header: "Purpose",
