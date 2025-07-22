@@ -19,11 +19,11 @@ export default function MeterDtailPage({
         <main>
             <NavbarDB title="Meter Details" showBackBtn/>
             <div className="my-8 mx-4 md:mx-auto">
-                <div className="w-full md:w-2xl mx-auto">
+                <div className="w-full md:w-2xl lg:w-3xl mx-auto">
                     <MeterConsumptionChart meterId={id}/>
                 </div>
                 <div className="h-10"></div>
-                <div className="w-full md:w-2xl mx-auto">
+                <div className="w-full md:w-2xl lg:w-3xl mx-auto">
                     <MetailDetail 
                         meterIsLoading={isLoading} 
                         meter={data} 
@@ -32,7 +32,7 @@ export default function MeterDtailPage({
                     />
                 </div>
                 <div className="h-14"></div>
-                <div className="w-full md:w-2xl mx-auto">
+                <div className="w-full md:w-2xl lg:w-3xl mx-auto">
                    {isLoading ? (<Skeleton className="w-full h-[250px]"/>): data && (<MeterManagementTab meter={data} refetch={refetch} />)}
                 </div>
             </div>
