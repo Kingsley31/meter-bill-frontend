@@ -89,7 +89,7 @@ export function getAllMeterColumns({refetch}: GetAllMetersColumsProps) {
               <DropdownMenuItem asChild>
                 <Button variant="ghost" asChild><Link href={routes.meters.path+'/'+meter.id}>View Details</Link></Button>
               </DropdownMenuItem>
-              {(meter.type == MeterType.MEASUREMENT) &&(<DropdownMenuItem asChild><CreateMeterReadingForm triggerType={MeterReadingFormTriggerType.MENU} meter={meter} refetch={refetch}/></DropdownMenuItem>)}
+              {(meter.type == MeterType.MEASUREMENT && meter.isActive) &&(<DropdownMenuItem asChild><CreateMeterReadingForm triggerType={MeterReadingFormTriggerType.MENU} meter={meter} refetch={refetch}/></DropdownMenuItem>)}
             </DropdownMenuContent>
           </DropdownMenu>
         )
