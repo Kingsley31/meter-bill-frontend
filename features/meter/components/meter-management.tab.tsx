@@ -6,6 +6,7 @@ import { MeterType } from "@/shared/meter/enums";
 import { SetMeterTariff } from "./set-meter-tariff.form";
 import { ManageMeterReadings } from "./manage-meter-readings";
 import { ManageMeterConsumption } from "./manage-meter-consumption.table";
+import { ManageMeterTariff } from "./manage-meter-tariffs";
 
 
 export type MeterManagementTabProps = {
@@ -18,7 +19,7 @@ export function MeterManagementTab({meter, refetch }: MeterManagementTabProps) {
             <TabsList className="flex flex-wrap sm:flex-nowrap h-fit">
                 <TabsTrigger value="area" className="">Assign Area</TabsTrigger>
                 <TabsTrigger value="customer" className="">Assign Customer</TabsTrigger>
-                <TabsTrigger value="tarrif" className="">Set Tarrif</TabsTrigger>
+                <TabsTrigger value="tarrif" className="">Manage Tarrifs</TabsTrigger>
                 {(meter.type == MeterType.DERIVED) && (<TabsTrigger value="calculate-reading" className="">Consumption</TabsTrigger>)}
                 {(meter.type == MeterType.MEASUREMENT) && (<TabsTrigger value="reading" className="">Manage Readings</TabsTrigger>)}
             </TabsList>
@@ -26,7 +27,7 @@ export function MeterManagementTab({meter, refetch }: MeterManagementTabProps) {
             <TabsContent value="customer"><AssignMeterCustomer meter={meter} refetch={refetch}/></TabsContent>
             {(meter.type == MeterType.DERIVED) && (<TabsContent value="calculate-reading"><ManageMeterConsumption meter={meter}/></TabsContent>)}
             {(meter.type == MeterType.MEASUREMENT) && (<TabsContent value="reading"><ManageMeterReadings meter={meter} refetch={refetch}/></TabsContent>)}
-            <TabsContent value="tarrif"><SetMeterTariff meter={meter} refetch={refetch} /></TabsContent>
+            <TabsContent value="tarrif"><ManageMeterTariff meter={meter} refetch={refetch} /></TabsContent>
         </Tabs>
     );
 }
