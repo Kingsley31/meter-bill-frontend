@@ -55,9 +55,9 @@ export function getMeterReadingColumns({ refetch }: GetMeterReadingColumsProps):
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            { canDeleteReading && (<DropdownMenuItem asChild>
+            <DropdownMenuItem asChild>
               <DeleteMeterReadingDialog reading={meterReading} refetch={refetch} disabled={!canDeleteReading}/>
-            </DropdownMenuItem>)}
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
