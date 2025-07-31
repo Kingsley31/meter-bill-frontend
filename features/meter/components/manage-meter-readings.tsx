@@ -13,10 +13,10 @@ import { Meter } from "@/shared/meter/types"
 
 import { CreateMeterReadingForm, MeterReadingFormTriggerType } from "./meter-reading.form"
 import { DataTable } from "@/components/data-table"
-import { meterReadingColumns } from "./meter-reading.colums"
 import { ListMeterReadingsFilters } from "../api/list-meter-readings.api"
 import { useState } from "react"
 import { useListMeterReading } from "../hooks/use-list-meter-reading.hook"
+import { getMeterReadingColumns } from "./meter-reading.colums"
 
 
 type ManageMeterReadingsProps = {
@@ -62,7 +62,7 @@ const refetchAll = () => {
         <div>
           <p className="text-sm font-medium mb-2">Reading History</p>
           <DataTable
-            columns={meterReadingColumns}
+            columns={getMeterReadingColumns({ refetch: refetchAll })}
             data={data?.data || []}
             emptyMessage="No meter readings found."
             loading={isLoading}

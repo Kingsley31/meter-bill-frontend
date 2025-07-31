@@ -1,9 +1,17 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { MeterReading } from "../meter.types";
 import { format } from "date-fns";
-import { ImageIcon } from "lucide-react";
+import { ImageIcon, MoreHorizontal } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { DeleteMeterReadingDialog } from "./delete-meter-reading.dialog";
 
-export const meterReadingColumns: ColumnDef<MeterReading>[] = [
+export type GetMeterReadingColumsProps = {
+  refetch: () => void;
+}
+
+export function getMeterReadingColumns({ refetch }: GetMeterReadingColumsProps): ColumnDef<MeterReading>[] {
+  const meterReadingColumns: ColumnDef<MeterReading>[] = [
   {
     accessorKey: "kwhReading",
     header: "Kwh Reading",
@@ -29,47 +37,32 @@ export const meterReadingColumns: ColumnDef<MeterReading>[] = [
     header: "Date Entered",
     cell: ({ row }) => format(new Date(row.original.createdAt), "PPP"),
   },
-  // {
-  //   accessorKey: "isActive",
-  //   header: "Active",
-  //   cell: ({ row }) => (
-  //     <span
-  //       className={
-  //         row.original.isActive
-  //           ? "text-green-600 font-medium text-sm"
-  //           : "text-red-500 font-medium text-sm"
-  //       }
-  //     >
-  //       {row.original.isActive ? "Yes" : "No"}
-  //     </span>
-  //   ),
-  // },
-  // {
-  //   accessorKey: "currentKwhReading",
-  //   header: "Current kWh",
-  //   cell: ({ row }) => row.original.currentKwhReading ?? 0,
-  // },
-  // {
-  //   id: "actions",
-  //   enableHiding: false,
-  //   cell: ({ row }) => {
-  //     const meter = row.original
-  //     return (
-  //       <DropdownMenu>
-  //         <DropdownMenuTrigger asChild>
-  //           <Button variant="ghost" className="h-8 w-8 p-0">
-  //             <span className="sr-only">Open menu</span>
-  //             <MoreHorizontal />
-  //           </Button>
-  //         </DropdownMenuTrigger>
-  //         <DropdownMenuContent align="end">
-  //           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-  //           <DropdownMenuItem asChild>
-  //             <Link href={routes.meters.path+'/'+meter.id}>Manage Details</Link>
-  //           </DropdownMenuItem>
-  //         </DropdownMenuContent>
-  //       </DropdownMenu>
-  //     )
-  //   },
-  // },
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const meterReading = row.original;
+      const todayDate = new Date();
+      const readingEnteryDate = new Date(meterReading.createdAt);
+      const canDeleteReading = todayDate.getDate() === readingEnteryDate.getDate();
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            { canDeleteReading && (<DropdownMenuItem asChild>
+              <DeleteMeterReadingDialog reading={meterReading} refetch={refetch} disabled={!canDeleteReading}/>
+            </DropdownMenuItem>)}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )
+    },
+  },
 ];
+  return meterReadingColumns;
+}
