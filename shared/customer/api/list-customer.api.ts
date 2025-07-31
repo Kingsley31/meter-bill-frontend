@@ -21,7 +21,7 @@ export async function listCustomers(filters: ListCustomerFilters): Promise<Pagin
       name: `Customer ${i + 1}`,
       email: `cust${i + 1}@email.com`,
       address: `Block ${i + 1}, Utility Rd.`,
-      phone: `080${i + 1}84832${i + 1}`
+      phone: `+23480${i + 1}84${i + 1}832${i + 1}`
     }))
 
       const filteredCustomers = mockCustomers.filter((cust) =>

@@ -23,6 +23,7 @@ export type Meter = {
   customerId: string;
   customerName: string;
   tariff: number;
+  totalCustomers: number;
   currentKwhReading: number;
   currentKwhReadingDate: string; // ISO date string
   currentKwhConsumption: number;

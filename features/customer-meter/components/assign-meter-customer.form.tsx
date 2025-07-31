@@ -1,13 +1,6 @@
 "use client"
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -26,9 +19,11 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn, getErrorMessage } from "@/lib/utils"
 import { Meter } from "@/shared/meter/types"
 import { useListCustomer } from "@/shared/customer/hooks/use-list-customer.hook"
-import { useAssignMeterCustomer } from "../hooks/use-assign-meter-customer.hook"
 import { toast } from "sonner"
 import { displayError, displaySuccess } from "@/components/display-message"
+import { Customer } from "@/shared/customer/types"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { useAssignMeterCustomer } from "../hooks/use-assign-meter-customer.hook"
 
 const formSchema = z.object({
   customerId: z.string().min(1, "Please select a customer."),
@@ -46,6 +41,7 @@ export type AssignMeterCustomerProps = {
 }
 
 export function AssignMeterCustomer({ meter, refetch}: AssignMeterCustomerProps) {
+  const [open, setOpen] = useState(false)
   const form = useForm<AssignCustomerFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -53,10 +49,11 @@ export function AssignMeterCustomer({ meter, refetch}: AssignMeterCustomerProps)
     },
   })
 
-  const [customerName, setCustomerName] = useState("");
-  const [query, setQuery] = useState("")
-  const [page, setPage] = useState(1)
-  const pageSize = 5
+
+  const [customer, setCustomer] = useState<Customer>();
+  const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
+  const pageSize = 5;
 
   const { data, isLoading, isError, refetch: refetchCustomers } = useListCustomer({search: query, page: page, pageSize: pageSize});
 
@@ -69,11 +66,19 @@ export function AssignMeterCustomer({ meter, refetch}: AssignMeterCustomerProps)
             toast.error('Meter is already assigned to this customer')
             return;
         }
-        assignCustomerMutation.mutate({customerId: data.customerId, custmerName: customerName, meterId: meter.id}, {
+        assignCustomerMutation.mutate({
+          customerId: data.customerId,
+          custmerName: customer!.name,
+          customerEmail: customer!.email,
+          meterId: meter.id,
+          customerPhone: customer?.phone,
+          meterNumber: meter.meterNumber
+        }, {
             onSuccess: () => {
-                displaySuccess("Meter Assigned successfully", `Meter ${meter.meterNumber} has been assigned to ${customerName}.`);
+                displaySuccess("Meter Assigned successfully", `Meter ${meter.meterNumber} has been assigned to ${customer?.name}.`);
                 form.reset();
                 refetch();
+                setOpen(false);
             },
             onError: (error: unknown) => {
                 const message = getErrorMessage(error);
@@ -83,17 +88,23 @@ export function AssignMeterCustomer({ meter, refetch}: AssignMeterCustomerProps)
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Assign Customer to Meter</CardTitle>
-        <CardDescription>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+          <Button variant="default">Assign Customer</Button>
+      </DialogTrigger>
+      <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Assign Customer to Meter</DialogTitle>
+        <DialogDescription>
           Search and select a customer to assign to this meter.
-        </CardDescription>
-      </CardHeader>
+          <br />
+          Meter: <span className="font-medium">{meter.meterNumber}</span>
+        </DialogDescription>
+      </DialogHeader>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
-          <CardContent className="grid gap-4">
+          <div className="grid gap-4">
             <FormField
               control={form.control}
               name="customerId"
@@ -128,7 +139,10 @@ export function AssignMeterCustomer({ meter, refetch}: AssignMeterCustomerProps)
                                 "p-2 rounded-md cursor-pointer hover:bg-muted transition-colors",
                                 field.value === cust.id && "bg-primary/10"
                               )}
-                              onClick={() => {field.onChange(cust.id); setCustomerName(cust.name);}}
+                              onClick={() => {
+                                field.onChange(cust.id);
+                                setCustomer(cust);
+                              }}
                             >
                               <div className="font-medium">{cust.name}</div>
                               <div className="text-sm text-muted-foreground">
@@ -172,27 +186,30 @@ export function AssignMeterCustomer({ meter, refetch}: AssignMeterCustomerProps)
                 </FormItem>
               )}
             />
-          </CardContent>
+          </div>
 
-          <CardFooter className="flex justify-between items-center mt-6">
+          <DialogFooter className="mt-6">
             <Button 
-                variant="outline" 
+                variant="outline"
+                size="sm"
                 disabled={form.formState.isSubmitting || assignCustomerMutation.isPending}
-                onClick={()=> form.reset() }>
+                onClick={()=> {form.reset(); setOpen(false);} }>
                 Cancel
             </Button>
             <Button
               type="submit"
+              size="sm"
               disabled={
                 !form.watch("customerId") || assignCustomerMutation.isPending
               }
             >
               {assignCustomerMutation.isPending ? "Assigning..." : "Assign Customer"}
             </Button>
-          </CardFooter>
+          </DialogFooter>
         </form>
       </Form>
-    </Card>
+      </DialogContent>
+    </Dialog>
   )
 }
 

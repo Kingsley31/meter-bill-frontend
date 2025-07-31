@@ -7,6 +7,7 @@ import { use } from "react";
 import { getErrorMessage } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MeterManagementTab } from "@/features/meter/components/meter-management.tab";
+import { ManageMeterCustomer } from "@/features/customer-meter/components/manage-meter-customers";
 
 export default function MeterDtailPage({
   params,
@@ -33,7 +34,7 @@ export default function MeterDtailPage({
                 </div>
                 <div className="h-14"></div>
                 <div className="w-full md:w-2xl lg:w-3xl mx-auto">
-                   {isLoading ? (<Skeleton className="w-full h-[250px]"/>): data && (<MeterManagementTab meter={data} refetch={refetch} />)}
+                   {isLoading ? (<Skeleton className="w-full h-[250px]"/>): data && (<MeterManagementTab meter={data} refetch={refetch} manageCustomersTab={<ManageMeterCustomer meter={data} refetch={refetch}/>} />)}
                 </div>
             </div>
         </main>
