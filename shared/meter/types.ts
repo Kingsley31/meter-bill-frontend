@@ -31,6 +31,8 @@ export type Meter = {
   previousKwhConsumption: number;
   previousKwhReadingDate: string; // ISO date string
   lastBillKwhConsumption: number;
+  lastBillDate?: string; // ISO date string
+  lastBillAmount: number;
   calculationReferenceMeterId?: string;
   createdAt: string; // ISO date string
   updatedAt: string; // ISO date string

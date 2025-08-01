@@ -5,12 +5,15 @@ import { ImageIcon, MoreHorizontal } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { DeleteMeterReadingDialog } from "./delete-meter-reading.dialog";
+import { Meter } from "@/shared/meter/types";
+import { EditMeterReadingDialog } from "./edit-meter-reading.dialog";
 
 export type GetMeterReadingColumsProps = {
   refetch: () => void;
+  meter: Meter;
 }
 
-export function getMeterReadingColumns({ refetch }: GetMeterReadingColumsProps): ColumnDef<MeterReading>[] {
+export function getMeterReadingColumns({ refetch, meter }: GetMeterReadingColumsProps): ColumnDef<MeterReading>[] {
   const meterReadingColumns: ColumnDef<MeterReading>[] = [
   {
     accessorKey: "kwhReading",
@@ -40,11 +43,23 @@ export function getMeterReadingColumns({ refetch }: GetMeterReadingColumsProps):
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
+    cell: ({ row, table }) => {
       const meterReading = row.original;
+      const index = row.index;
+      const data = table.getRowModel().rows;
+      const readingPreviousReading = (data.length - 1) >= (index + 1)? data[index + 1].original : null;
       const todayDate = new Date();
       const readingEnteryDate = new Date(meterReading.createdAt);
       const canDeleteReading = todayDate.getDate() === readingEnteryDate.getDate();
+      const isPartOfMeterLastTwoReaidngs = (meter: Meter, reading: MeterReading): boolean => {
+        const meterCurrentKwhReadingDate = meter.currentKwhReadingDate ? new Date(meter.currentKwhReadingDate) : null;
+        const meterLastKwhReadingDate = meter.previousKwhReadingDate ? new Date(meter.previousKwhReadingDate) : null;
+        const readingDate = new Date(reading.readingDate);
+        if (!meterCurrentKwhReadingDate || !meterLastKwhReadingDate) return false;
+        return readingDate.getDate() === meterCurrentKwhReadingDate.getDate() || readingDate.getDate() === meterLastKwhReadingDate.getDate();
+      }
+      const canEditReading = isPartOfMeterLastTwoReaidngs(meter,meterReading);
+      
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -57,6 +72,9 @@ export function getMeterReadingColumns({ refetch }: GetMeterReadingColumsProps):
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem asChild>
               <DeleteMeterReadingDialog reading={meterReading} refetch={refetch} disabled={!canDeleteReading}/>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <EditMeterReadingDialog key={meterReading.id} meter={meter} meterReading={meterReading} readingPreviousReading={readingPreviousReading} refetch={refetch} disabled={!canEditReading}/>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

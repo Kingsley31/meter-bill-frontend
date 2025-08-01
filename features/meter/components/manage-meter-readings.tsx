@@ -62,7 +62,7 @@ const refetchAll = () => {
         <div>
           <p className="text-sm font-medium mb-2">Reading History</p>
           <DataTable
-            columns={getMeterReadingColumns({ refetch: refetchAll })}
+            columns={getMeterReadingColumns({ refetch: refetchAll,meter })}
             data={data?.data || []}
             emptyMessage="No meter readings found."
             loading={isLoading}

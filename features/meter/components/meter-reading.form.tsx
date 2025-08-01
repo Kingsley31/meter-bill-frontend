@@ -18,35 +18,11 @@ import { useState } from "react"
 import { displayError, displaySuccess } from "@/components/display-message"
 import { getErrorMessage } from "@/lib/utils"
 import { MAX_METER_IMAGE_SIZE_BYTES } from "../constants"
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
 import { uploadFile } from "@/shared/file/api/upload-file.api"
 import { useUploadMeterReading } from "../hooks/use-upload-meter-reading.hook"
+import { MeterReadingConfirmationAlert } from "./confirm-meter-reading.dialog"
 
-export type MeterReadingResetAlertProps = {
-    isOpen: boolean;
-    meter: Meter;
-    reading: number;
-    setConfirmed: (confirmed: boolean) => void;
-}
-export function MeterReadingConfirmationAlert({isOpen, setConfirmed, meter, reading}:MeterReadingResetAlertProps){
-    return (
-    <AlertDialog open={isOpen}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            Your reading: {reading} is less than the {"meter's"} current reading: {meter.currentKwhReading}.
-            Clicking continue assumes that the {"meter's"} reading has reset.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setConfirmed(false)}>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => setConfirmed(true)}>Continue</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  )
-}
+
 
 const ALLOWED_MIME_TYPES = [
     'image/png',
@@ -137,7 +113,7 @@ export function CreateMeterReadingForm({meter, refetch, triggerType = MeterReadi
         return;
     }
     if (!meter.hasMaxKwhReading && data.reading < meter.currentKwhReading) {
-        form.setError("reading", {message:"Reading cannot be less than the current meter reading for a meter that does have a reset value."});
+        form.setError("reading", {message:"Reading cannot be less than the current meter reading for a meter that doesn't have a reset value."});
         return;
     }
     if (data.reading < meter.currentKwhReading) {
@@ -212,7 +188,7 @@ export function CreateMeterReadingForm({meter, refetch, triggerType = MeterReadi
             </Button>
           </DialogFooter>
         </form>
-        <MeterReadingConfirmationAlert meter={meter} isOpen={confirmReadingOpen} setConfirmed={onReadingConfirmed} reading={form.watch('reading')}/>
+        <MeterReadingConfirmationAlert previousReading={meter.currentKwhReading} isOpen={confirmReadingOpen} setConfirmed={onReadingConfirmed} reading={form.watch('reading')}/>
       </DialogContent>
     </Dialog>
   );
