@@ -115,6 +115,7 @@ export function EditMeterReadingDialog({meterReading, readingPreviousReading, me
       const onReadingConfirmed = async (confirmed: boolean) => {
         setConfirmReadingOpen(false);
         if (!confirmed) return;
+        uploadReading(form.getValues());
       }
 
       const onReadingBillConfirmed = async (confirmed: boolean) => {

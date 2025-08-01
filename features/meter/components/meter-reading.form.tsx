@@ -105,6 +105,7 @@ export function CreateMeterReadingForm({meter, refetch, triggerType = MeterReadi
   const onReadingConfirmed = async (confirmed: boolean) => {
     setConfirmReadingOpen(false);
     if (!confirmed) return;
+    uploadReading(form.getValues());
   }
 
   const onSubmit = async (data: FormValues) => {
