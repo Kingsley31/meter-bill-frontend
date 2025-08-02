@@ -128,6 +128,10 @@ export function EditMeterReadingDialog({meterReading, readingPreviousReading, me
         //     form.setError("date", {message:"Reading date must be after meter current reading date."});
         //     return;
         // }
+        if (data.reading === meterReading.kwhReading) {
+          form.setError("reading", {message:"Reading must be different from the current reading."});
+          return;
+        }
         if (!meter.hasMaxKwhReading && readingPreviousReading && data.reading < readingPreviousReading.kwhReading) {
             console.log(meter.hasMaxKwhReading);
             form.setError("reading", {message:"Reading cannot be less than the previous meter reading for a meter that doesn't have a reset value."});
