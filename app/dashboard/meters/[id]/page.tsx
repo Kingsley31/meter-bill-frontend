@@ -8,6 +8,8 @@ import { getErrorMessage } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MeterManagementTab } from "@/features/meter/components/meter-management.tab";
 import { ManageMeterCustomer } from "@/features/customer-meter/components/manage-meter-customers";
+import { useAreaOptions } from "@/shared/area/hooks/use-area-options.hook";
+import { useMeterOptions } from "@/shared/meter/hooks/use-meter-options.hook";
 
 export default function MeterDtailPage({
   params,
@@ -16,6 +18,9 @@ export default function MeterDtailPage({
 }) {
     const { id } = use(params)
     const { data, isLoading, error, refetch } = useGetMeter({meterId: id});
+     const {loadOptions:loadAreaOptions} =  useAreaOptions();
+     const {loadOptions:loadMeterOptions} = useMeterOptions();
+
     return (
         <main>
             <NavbarDB title="Meter Details" showBackBtn/>
@@ -26,7 +31,9 @@ export default function MeterDtailPage({
                 <div className="h-10"></div>
                 <div className="w-full md:w-2xl lg:w-3xl mx-auto">
                     <MetailDetail 
-                        meterIsLoading={isLoading} 
+                        meterIsLoading={isLoading}
+                        loadAreaOptions={loadAreaOptions}
+                        loadMeterOptions={loadMeterOptions} 
                         meter={data} 
                         meterError={error ? getErrorMessage(error) : null}
                         refetch={refetch} 

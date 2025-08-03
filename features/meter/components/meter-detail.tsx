@@ -3,14 +3,18 @@ import { MeterStatus } from "./meter-status";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Meter } from "@/shared/meter/types";
+import { EditMeterDetailDialog } from "./edit-meter-detail.dialog";
+import { LoadOptions } from "@/components/paginated-async-select";
 
 export type MeterDetailProp = {
     meter?: Meter;
     meterIsLoading: boolean;
     meterError?: string | null;
     refetch: () => void;
+    loadAreaOptions: LoadOptions;
+    loadMeterOptions: LoadOptions;
 }
-export function MetailDetail({meter, meterIsLoading, meterError, refetch }: MeterDetailProp) {
+export function MetailDetail({meter, meterIsLoading, meterError, refetch, loadAreaOptions, loadMeterOptions }: MeterDetailProp) {
     return (
         <main>
             <div className="flex items-center justify-between mx-4 my-2">
@@ -23,7 +27,7 @@ export function MetailDetail({meter, meterIsLoading, meterError, refetch }: Mete
                         (<p className="mx-auto text-destructive text-sm">
                             Error loading meter. 
                             {refetch && (<span className="font-bold cursor-pointer" onClick={()=> refetch()}><u>reload</u></span>)}
-                        </p>):(
+                        </p>):(<>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-0">
                         <div className="flex items-center justify-between md:border-r md:pr-4 md:pb-4">
                             <span className="text-sm font-medium">Meter ID:</span>
@@ -82,6 +86,8 @@ export function MetailDetail({meter, meterIsLoading, meterError, refetch }: Mete
                         </div>
                         <div className="md:border-l md:pl-4 md:pb-4"></div>
                     </div>
+                    <div className="flex flex-col items-end">{meter? (<EditMeterDetailDialog meter={meter} refetch={refetch} loadAreaOptions={loadAreaOptions} loadMeterOptions={loadMeterOptions}/>):(<Skeleton className="h-[20px] w-[70px] rounded-sm"/>)}</div>
+                    </>
                     )}
                 </CardContent>
             </Card>

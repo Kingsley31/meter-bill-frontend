@@ -91,6 +91,8 @@ export function AssignMeterArea({ meter, refetch }: AssignMeterAreaProps) {
                   <FormLabel>Area<span className="text-red-600">*</span></FormLabel>
                   <PaginatedAsyncSelect
                         loadOptions={loadAreaOptions}
+                        {...field}
+                        name={field.name}
                         setFormValue={(option: OptionType | null) => {
                             field.onChange(option?.value)
                             setAreaName(option?.label || "")

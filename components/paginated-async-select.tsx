@@ -22,9 +22,11 @@ type PaginatedAsyncSelectProps = {
   loadOptions: LoadOptions;
   placeholder?: string;
   defaultValue?: OptionType;
+  disabled?: boolean;
+  name?: string;
 };
 
-const PaginatedAsyncSelect = ({setFormValue, loadOptions, defaultValue ,placeholder}:PaginatedAsyncSelectProps) => {
+const PaginatedAsyncSelect = ({setFormValue, loadOptions, defaultValue ,placeholder,disabled,name}:PaginatedAsyncSelectProps) => {
   const [value, setValue] = useState<OptionType | null>(defaultValue??null);
 
   return (
@@ -34,6 +36,8 @@ const PaginatedAsyncSelect = ({setFormValue, loadOptions, defaultValue ,placehol
       onChange={(newValue) => { setValue(newValue); setFormValue(newValue); }}
       additional={{ page: 1 }}
       debounceTimeout={300}
+      name={name}
+      isDisabled={disabled}
       placeholder={placeholder || "Select an option..."}
     />
   );

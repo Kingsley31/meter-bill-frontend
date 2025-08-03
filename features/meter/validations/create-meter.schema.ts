@@ -50,3 +50,12 @@ export const createMeterSchema = z.object({
 })
 
 export type CreateMeterFormValues = z.infer<typeof createMeterSchema>
+
+export const editMeterSchema = z.object({
+    ctRating: z.coerce.number().min(1, "CT Rating is required"),
+    ctMultiplierFactor: z.coerce.number().min(1, "CT Multiplier is required"),
+    hasMaxKwhReading: z.boolean(),
+    maxKwhReading: z.coerce.number().optional(),
+});
+
+export type EditMeterFormValues = z.infer<typeof editMeterSchema>
