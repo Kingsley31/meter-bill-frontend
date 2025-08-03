@@ -1,3 +1,4 @@
+import { Meter } from "@/shared/meter/types";
 
 export type MeterConsumptionChartData = {
     month: string;
@@ -27,3 +28,5 @@ export type MeterTariff = {
   updatedAt: string; // ISO date string
   deletedAt?: string; // ISO date string
 }
+
+export type MeterWithConsumptionChangePercent = Meter & {consumptionChangePercent: number};
