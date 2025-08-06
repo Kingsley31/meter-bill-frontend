@@ -117,6 +117,10 @@ export function CreateMeterReadingForm({meter, refetch, triggerType = MeterReadi
         form.setError("reading", {message:"Reading cannot be less than the current meter reading for a meter that doesn't have a reset value."});
         return;
     }
+    if (meter.hasMaxKwhReading && data.reading > (meter.maxKwhReading ?? 0)) {
+        form.setError("reading", {message:"Reading cannot be more than the meter max kwh reading."});
+        return;
+    }
     if (data.reading < meter.currentKwhReading) {
         setConfirmReadingOpen(true);
         return;
