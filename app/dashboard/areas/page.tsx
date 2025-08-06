@@ -5,6 +5,8 @@ import { routes } from "@/data/routes";
 import { PlusIcon } from "lucide-react";
 import { AreaStatistics } from "@/features/area/components/area-statistics";
 import { AllAreasTable } from "@/features/area/components/all-areas.table";
+import { Suspense } from "react";
+import { LoadingTable } from "@/components/loading-table";
 
 export default function ListAreaPage() {
     return (
@@ -19,7 +21,7 @@ export default function ListAreaPage() {
                 <div className="w-full md:w-2xl lg:w-3xl mx-auto"><AreaStatistics /></div>
                 <div className="h-10"></div>
                 <div className="w-full md:w-2xl lg:w-3xl mx-auto">
-                    <AllAreasTable/>
+                    <Suspense fallback={<LoadingTable/>}><AllAreasTable/></Suspense>
                 </div>
             </div>
         </main>
