@@ -10,6 +10,7 @@ import {
     LogOut,
     Settings,
     CircleUser,
+    ChevronRight,
  } from "lucide-react"
  
 import {
@@ -29,7 +30,6 @@ import {
 import { usePathname } from "next/navigation"
 import { IconInnerShadowTop, IconReport } from "@tabler/icons-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { useState } from "react"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { routes } from "@/data/routes"
 
@@ -52,6 +52,10 @@ const items = [
     title: routes.areas.title,
     url: routes.areas.path,
     icon: LandPlot,
+    subItems: [
+      { title: routes.areas.title, url: routes.areas.path, icon: LandPlot },
+      { title: routes.createArea.title, url: routes.createArea.path, icon: LandPlot },
+    ],
   },
   {
     title: routes.customers.title,
@@ -71,8 +75,12 @@ const items = [
 ]
 
 export function SaSidebar() {
-    const pathname = usePathname()
-    const [metersOpen, setMetersOpen] = useState(false)
+    const pathname = usePathname();
+
+    const getIsActive = (path: string) => {
+      if (pathname.startsWith(path)) return true;
+      return false;
+    }
 
     return (
     <Sidebar collapsible="offcanvas" variant="inset">
@@ -97,18 +105,18 @@ export function SaSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) =>
-                item.title === routes.meters.title ? (
-                  <Collapsible key={item.title} open={metersOpen} onOpenChange={setMetersOpen}>
+                Object.hasOwn(item,"subItems") ? (
+                  <Collapsible key={item.title}>
                     <SidebarMenuItem>
                       <CollapsibleTrigger asChild>
                         <SidebarMenuButton
-                          isActive={pathname.startsWith(routes.meters.path)}
-                          className="flex items-center w-full"
+                          isActive={getIsActive(item.url)}
+                          className="group flex items-center w-full"
                         >
                           <item.icon />
                           <span>{item.title}</span>
-                          <ChevronUp
-                            className={`ml-auto transition-transform ${metersOpen ? "rotate-180" : ""}`}
+                          <ChevronRight
+                            className="ml-auto transition-transform group-data-[state=open]:rotate-90"
                           />
                         </SidebarMenuButton>
                       </CollapsibleTrigger>

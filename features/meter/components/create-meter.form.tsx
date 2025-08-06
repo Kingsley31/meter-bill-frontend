@@ -16,10 +16,12 @@ import { useCreateMeter } from "../hooks/use-create-meter.hook"
 import { getErrorMessage } from "@/lib/utils"
 import { displayError, displaySuccess } from "@/components/display-message"
 import { MeterPurpose, MeterType, Operaor } from "@/shared/meter/enums"
+import { AreaOption } from "@/shared/area/hooks/use-area-options.hook"
+import { MeterOption } from "@/shared/meter/hooks/use-meter-options.hook"
 
 type CreateMeterFormProps = {
-    loadAreaOptions: LoadOptions;
-    loadMeterOptions: LoadOptions;
+    loadAreaOptions: LoadOptions<AreaOption>;
+    loadMeterOptions: LoadOptions<MeterOption>;
 }
 
 export function CreateMeterForm({ loadAreaOptions, loadMeterOptions }: CreateMeterFormProps) {

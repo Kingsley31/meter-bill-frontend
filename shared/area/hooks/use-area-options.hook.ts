@@ -10,7 +10,7 @@ export type AreaOption = {
     area: Area;
 }
 
-const getAreaOptions: LoadOptions = async (inputValue: string, loadedOptions, additional) => {
+const getAreaOptions: LoadOptions<AreaOption> = async (inputValue: string, loadedOptions, additional) => {
     const page = additional?.page ?? 1;
     const pageSize = 10;
     try {
@@ -21,7 +21,7 @@ const getAreaOptions: LoadOptions = async (inputValue: string, loadedOptions, ad
         });
         const options: AreaOption[] = areas.data.map(area => ({
             value: area.id,
-            label: area.name,
+            label: area.areaName,
             area: area
         }));
         return {
@@ -45,7 +45,7 @@ const getAreaOptions: LoadOptions = async (inputValue: string, loadedOptions, ad
 }
 
 export const useAreaOptions = () => {
-    const loadOptions: LoadOptions = async (inputValue, loadedOptions, additional) => {
+    const loadOptions: LoadOptions<AreaOption> = async (inputValue, loadedOptions, additional) => {
         return await getAreaOptions(inputValue, loadedOptions, additional);
     };
 

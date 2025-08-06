@@ -13,30 +13,32 @@ export type Additional = {
   page: number;
 };
 
-export type SetFormValue = (option: OptionType | null) => void;
+export type SetFormValue<OpType extends OptionType> = (option: OpType | null) => void;
 
-export type LoadOptions = AsyncPaginateProps<OptionType, GroupBase<OptionType>, Additional, false>['loadOptions'];
+export type LoadOptions<OpType extends OptionType> = AsyncPaginateProps<OpType, GroupBase<OpType>, Additional, false>['loadOptions'];
 
-type PaginatedAsyncSelectProps = {
-  setFormValue: SetFormValue;
-  loadOptions: LoadOptions;
+type PaginatedAsyncSelectProps<OpType extends OptionType> = {
+  setFormValue: SetFormValue<OpType>;
+  loadOptions: LoadOptions<OpType>;
+  clearCacheOnMenuClose?: boolean;
   placeholder?: string;
-  defaultValue?: OptionType;
+  defaultValue?: OpType;
   disabled?: boolean;
   name?: string;
 };
 
-const PaginatedAsyncSelect = ({setFormValue, loadOptions, defaultValue ,placeholder,disabled,name}:PaginatedAsyncSelectProps) => {
-  const [value, setValue] = useState<OptionType | null>(defaultValue??null);
+const PaginatedAsyncSelect = <OpType extends OptionType>({setFormValue, loadOptions, defaultValue ,placeholder,disabled,name,clearCacheOnMenuClose}:PaginatedAsyncSelectProps<OpType>) => {
+  const [value, setValue] = useState<OpType | null>(defaultValue??null);
 
   return (
-    <AsyncPaginate<OptionType, GroupBase<OptionType>, Additional>
+    <AsyncPaginate<OpType, GroupBase<OpType>, Additional>
       value={value}
       loadOptions={loadOptions}
       onChange={(newValue) => { setValue(newValue); setFormValue(newValue); }}
       additional={{ page: 1 }}
       debounceTimeout={300}
       name={name}
+      clearCacheOnMenuClose={clearCacheOnMenuClose}
       isDisabled={disabled}
       placeholder={placeholder || "Select an option..."}
     />

@@ -17,12 +17,14 @@ import { subMeterOperators } from "../data";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { AreaOption } from "@/shared/area/hooks/use-area-options.hook";
+import { MeterOption } from "@/shared/meter/hooks/use-meter-options.hook";
 
 export type EditMeterDetailDialogProps = {
     refetch: () => void;
     meter: Meter;
-    loadAreaOptions: LoadOptions;
-    loadMeterOptions: LoadOptions;
+    loadAreaOptions: LoadOptions<AreaOption>;
+    loadMeterOptions: LoadOptions<MeterOption>;
 }
 
 export function EditMeterDetailDialog({ refetch, meter,loadAreaOptions, loadMeterOptions }: EditMeterDetailDialogProps) {
