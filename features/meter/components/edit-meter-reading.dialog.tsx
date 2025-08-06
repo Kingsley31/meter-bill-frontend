@@ -137,6 +137,10 @@ export function EditMeterReadingDialog({meterReading, readingPreviousReading, me
             form.setError("reading", {message:"Reading cannot be less than the previous meter reading for a meter that doesn't have a reset value."});
             return;
         }
+        if (meter.hasMaxKwhReading && data.reading > (meter.maxKwhReading ?? 0)) {
+            form.setError("reading", {message:"Reading cannot be more than the meter max kwh reading."});
+            return;
+        }
         if (readingPreviousReading && data.reading < readingPreviousReading.kwhReading) {
             setConfirmReadingOpen(true);
             return;
