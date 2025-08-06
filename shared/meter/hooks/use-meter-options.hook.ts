@@ -10,7 +10,7 @@ export type MeterOption = {
     meter: Meter;
 }
 
-const getMeterOptions: LoadOptions = async (inputValue: string, loadedOptions, additional) => {
+const getMeterOptions: LoadOptions<MeterOption> = async (inputValue: string, loadedOptions, additional) => {
     const page = additional?.page ?? 1;
     const pageSize = 10;
     try {
@@ -45,7 +45,7 @@ const getMeterOptions: LoadOptions = async (inputValue: string, loadedOptions, a
 }
 
 export const useMeterOptions = () => {
-    const loadOptions: LoadOptions = async (inputValue, loadedOptions, additional) => {
+    const loadOptions: LoadOptions<MeterOption> = async (inputValue, loadedOptions, additional) => {
         return await getMeterOptions(inputValue, loadedOptions, additional);
     };
 
