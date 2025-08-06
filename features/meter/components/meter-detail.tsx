@@ -5,14 +5,16 @@ import { Badge } from "@/components/ui/badge";
 import { Meter } from "@/shared/meter/types";
 import { EditMeterDetailDialog } from "./edit-meter-detail.dialog";
 import { LoadOptions } from "@/components/paginated-async-select";
+import { AreaOption } from "@/shared/area/hooks/use-area-options.hook";
+import { MeterOption } from "@/shared/meter/hooks/use-meter-options.hook";
 
 export type MeterDetailProp = {
     meter?: Meter;
     meterIsLoading: boolean;
     meterError?: string | null;
     refetch: () => void;
-    loadAreaOptions: LoadOptions;
-    loadMeterOptions: LoadOptions;
+    loadAreaOptions: LoadOptions<AreaOption>;
+    loadMeterOptions: LoadOptions<MeterOption>;
 }
 export function MetailDetail({meter, meterIsLoading, meterError, refetch, loadAreaOptions, loadMeterOptions }: MeterDetailProp) {
     return (
