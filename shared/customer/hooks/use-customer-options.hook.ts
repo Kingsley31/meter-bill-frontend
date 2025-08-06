@@ -10,7 +10,7 @@ export type CustomerOption = {
     customer: Customer;
 }
 
-const getCustomerOptions: LoadOptions = async (inputValue: string, loadedOptions, additional) => {
+const getCustomerOptions: LoadOptions<CustomerOption> = async (inputValue: string, loadedOptions, additional) => {
     const page = additional?.page ?? 1;
     const pageSize = 10;
     try {
@@ -45,7 +45,7 @@ const getCustomerOptions: LoadOptions = async (inputValue: string, loadedOptions
 }
 
 export const useCustomerOptions = () => {
-    const loadOptions: LoadOptions = async (inputValue, loadedOptions, additional) => {
+    const loadOptions: LoadOptions<CustomerOption> = async (inputValue, loadedOptions, additional) => {
         return await getCustomerOptions(inputValue, loadedOptions, additional);
     };
 
