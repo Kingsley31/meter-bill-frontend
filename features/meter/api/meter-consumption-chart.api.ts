@@ -12,5 +12,5 @@ export async function getMeterConsumptionChartData(data: MeterConsumptionChartFi
     }
     const response = await apiClient.get<MeterConsumptionChartData[]>(`/meters/${data.meterId}/consumption-chart`,{params,});
         console.log(response.data);
-    return response.data;
+    return response.data.reverse();
 }

@@ -61,13 +61,16 @@ export function MeterConsumptionChart({meterId}: MeterConsumptionChartProps) {
             </Select>
         </CardAction>
       </CardHeader>
-      <CardContent className={(error || isLoading)? "px-6":"pl-0"}>
+      <CardContent className={(error || isLoading)? "px-6":""}>
         {error ? (<p className="mx-auto text-destructive text-sm">Error loading chart. <span className="font-bold cursor-pointer" onClick={()=> refetch()}><u>reload</u></span></p>): isLoading ? (<Skeleton className="h-[100px] rounded-sm"/>):(
         <ChartContainer config={chartConfig}>
           <AreaChart 
             accessibilityLayer 
             data={data}
-            margin={{left:0}}
+            margin={{
+              left: 0,
+              right: 0,
+            }}
             >
             <CartesianGrid vertical={false} />
             <XAxis 
@@ -76,13 +79,13 @@ export function MeterConsumptionChart({meterId}: MeterConsumptionChartProps) {
                 axisLine={false}
                 tickMargin={8}
               />
-            <YAxis />
+            <YAxis domain={[0,20000]}/>
             <ChartTooltip
               cursor={false}
               content={(props) => (<ChartTooltipContent {...props} indicator="line" />)}
             />
             <Area
-              type="natural"
+              type="monotoneX"
               dataKey="consumption"
               stroke="var(--ring)"
               fill="var(--ring)"
