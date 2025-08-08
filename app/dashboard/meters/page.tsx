@@ -24,7 +24,7 @@ export default function ListMeterPage() {
                 <div className="w-full md:w-2xl lg:w-3xl mx-auto"><Suspense fallback={<Skeleton className="h-100 w-full"/>}><MeterStatistics /></Suspense></div>
                 <div className="h-10"></div>
                 <div className="w-full md:w-2xl lg:w-3xl mx-auto">
-                    <MetersTab/>
+                    <Suspense fallback={<Skeleton className="h-100 w-full"/>}><MetersTab/></Suspense>
                 </div>
             </div>
         </main>
