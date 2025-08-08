@@ -44,7 +44,7 @@ const schema = z.object({
       message: "Please upload a valid meter image.",
     })
     .refine((file) => file instanceof File && file.size < MAX_METER_IMAGE_SIZE_BYTES, {
-      message: `Uploaded image must be less than ${MAX_METER_IMAGE_SIZE_BYTES}bytes.`,
+      message: `Uploaded image must be less than ${Math.round(MAX_METER_IMAGE_SIZE_BYTES/1048576)}mb.`,
     })
     .refine((file) => file instanceof File && ALLOWED_MIME_TYPES.includes(file.type), {
       message: `Only these types are allowed ${ALLOWED_TYPES.join(', ')}.`,
