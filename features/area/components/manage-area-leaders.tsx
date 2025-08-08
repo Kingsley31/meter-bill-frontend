@@ -40,7 +40,7 @@ const refetchAll = () => {
       <CardHeader>
         <CardTitle>Area Leaders</CardTitle>
         <CardDescription>
-            manage this area leaders for accurate notification and billing.<br/>
+            manage this area leaders for accurate notification of updates in the area.<br/>
             Area: <span className="font-medium">{area.areaName}</span><br/>
             Total Leaders: <span className="font-medium">{data?.total ?? 0}</span>
         </CardDescription>
