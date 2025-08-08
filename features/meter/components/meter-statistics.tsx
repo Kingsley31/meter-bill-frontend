@@ -6,10 +6,20 @@ import { useMeterStats } from "../hooks/use-meter-stats.hook";
 import { Skeleton } from "@/components/ui/skeleton";
 import { displayError } from "@/components/display-message";
 import { getErrorMessage } from "@/lib/utils";
+import { useSearchParams } from "next/navigation";
+import { MeterStatsFilter } from "../api/meter-stats.api";
 
 export function MeterStatistics() {
+	const searchParams = useSearchParams();
+	const filters: MeterStatsFilter = searchParams.get('areaId')?{areaId:searchParams.get('areaId') as string}:{};
+	// searchParams.forEach((value, key) => {
+	// 	if (key === "areaId") {
+	// 	(filters as Record<string, unknown>)[key] = value;
+	// 	}
+	// });
+	console.log(filters);
 	// Replace these with real data from your store or API as needed
-	const {data, isLoading, error }= useMeterStats();
+	const {data, isLoading, error }= useMeterStats(filters);
 
 	if (error) {
 		const message = getErrorMessage(error);
@@ -62,7 +72,7 @@ export function MeterStatistics() {
 			</Card>
 			<Card>
 				<CardHeader className="flex flex-row items-center justify-between pb-2">
-					<CardTitle className="text-sm font-medium">Average Consumption</CardTitle>
+					<CardTitle className="text-sm font-medium">Total Consumption</CardTitle>
 					<TrendingUp className="h-5 w-5 text-orange-600" />
 				</CardHeader>
 				<CardContent>
@@ -70,10 +80,10 @@ export function MeterStatistics() {
 					(<Skeleton className="h-4 w-2/3" />)
 					:
 					(<div className="text-2xl font-bold">
-						{data?.averageEnergyConsumption ? data?.averageEnergyConsumption.toLocaleString() : 0} kWh
+						{data?.totalEnergyConsumed ? data?.totalEnergyConsumed.toLocaleString() : 0} kWh
 					</div>)}
 					<div className="text-xs text-muted-foreground mt-1">
-						Recent average kWh consumed by all meters
+						Recent total kWh consumed by all meters
 					</div>
 				</CardContent>
 			</Card>

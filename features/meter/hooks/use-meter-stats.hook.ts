@@ -1,14 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { getMeterStats, MeterStatsResponse } from "../api/meter-stats.api";
+import { getMeterStats, MeterStatsFilter, MeterStatsResponse } from "../api/meter-stats.api";
 
 
-export function useMeterStats() {
-  // This hook is intended to fetch and return meter statistics.
-  // Currently, it does not implement any logic.
-  // You can implement the logic to fetch meter statistics here.
-  
+export function useMeterStats(filters:MeterStatsFilter) {
   return useQuery<MeterStatsResponse>({
-    queryKey: ["meter-stats"],
-    queryFn: getMeterStats,
+    queryKey: ["meter-stats", filters],
+    queryFn: () => getMeterStats(filters),
   });
 }

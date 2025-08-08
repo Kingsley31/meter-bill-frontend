@@ -11,7 +11,17 @@ export type MeterStatsResponse = {
   averageEnergyProduction?: number;
 }
 
-export async function getMeterStats(): Promise<MeterStatsResponse> {
-  const response = await apiClient.get<MeterStatsResponse>("/meters/stats");
+export type MeterStatsFilter = {
+  areaId?: string;
+}
+
+export async function getMeterStats(filters:MeterStatsFilter): Promise<MeterStatsResponse> {
+  const params = {
+    ...filters,
+    ...(filters.areaId && { areaId: filters.areaId }),
+  };
+  const response = await apiClient.get<MeterStatsResponse>("/meters/stats", {
+    params,
+  });
   return response.data;
 }

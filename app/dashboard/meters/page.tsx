@@ -5,6 +5,7 @@ import { routes } from "@/data/routes";
 import { PlusIcon } from "lucide-react";
 import { MeterStatistics } from "@/features/meter/components/meter-statistics";
 import { MetersTab } from "@/features/meter/components/meters.tab";
+import { AreaSwitcher } from "@/features/area/components/area-switcher";
 
 export default function ListMeterPage() {
     return (
@@ -16,6 +17,8 @@ export default function ListMeterPage() {
                 </div>
             </NavbarDB>
             <div className="my-8 mx-4 md:mx-auto">
+                <div className="flex justify-end w-full md:w-2xl lg:w-3xl mx-auto"><AreaSwitcher/></div>
+                <div className="h-4"></div>
                 <div className="w-full md:w-2xl lg:w-3xl mx-auto"><MeterStatistics /></div>
                 <div className="h-10"></div>
                 <div className="w-full md:w-2xl lg:w-3xl mx-auto">

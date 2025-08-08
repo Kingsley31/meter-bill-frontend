@@ -2,7 +2,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AllMetersTable } from "./all-meters.table";
 import { UnreadMetersTable } from "./unread-meters.table";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { LoadingTable } from "@/components/loading-table";
 import { Suspense } from "react";
 import { ReadExceptionMetersTable } from "./read-exception-meters.table";
@@ -10,8 +10,16 @@ import { ConsumptionExceptionMetersTable } from "./consumption-exception-meters.
 
 export function MetersTab() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const cleanSearchParams = () => {
+        const params = new URLSearchParams();
+        searchParams.forEach((v, k) => {
+            if (k == 'areaId' && v != 'all') params.set(k, v);
+        });
+        router.replace(`?${params.toString()}`);
+    }
     return (
-        <Tabs className="w-full" defaultValue="all" onValueChange={()=> router.replace("?")}>
+        <Tabs className="w-full" defaultValue="all" onValueChange={cleanSearchParams}>
             <TabsList className="flex flex-wrap sm:flex-nowrap h-fit">
                 <TabsTrigger value="all">All Meters</TabsTrigger>
                 <TabsTrigger value="unread">Unread Meters</TabsTrigger>

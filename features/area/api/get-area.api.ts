@@ -6,6 +6,5 @@ export type GetAreaProps = {
 }
 export async function getArea({areaId}: GetAreaProps): Promise<Area>{
     const response = await apiClient.get<Area>(`/areas/${areaId}`);
-    console.log(response.data);
     return response.data;
 }

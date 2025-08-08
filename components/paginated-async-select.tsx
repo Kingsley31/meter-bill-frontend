@@ -25,9 +25,10 @@ type PaginatedAsyncSelectProps<OpType extends OptionType> = {
   defaultValue?: OpType;
   disabled?: boolean;
   name?: string;
+  className?: string;
 };
 
-const PaginatedAsyncSelect = <OpType extends OptionType>({setFormValue, loadOptions, defaultValue ,placeholder,disabled,name,clearCacheOnMenuClose}:PaginatedAsyncSelectProps<OpType>) => {
+const PaginatedAsyncSelect = <OpType extends OptionType>({setFormValue, loadOptions, defaultValue ,placeholder,disabled,name,clearCacheOnMenuClose,className}:PaginatedAsyncSelectProps<OpType>) => {
   const [value, setValue] = useState<OpType | null>(defaultValue??null);
 
   return (
@@ -40,6 +41,7 @@ const PaginatedAsyncSelect = <OpType extends OptionType>({setFormValue, loadOpti
       name={name}
       clearCacheOnMenuClose={clearCacheOnMenuClose}
       isDisabled={disabled}
+      className={className}
       placeholder={placeholder || "Select an option..."}
     />
   );
