@@ -40,9 +40,14 @@ export function AreaSwitcher() {
         if (currentAreaId && currentAreaId.toLowerCase()!="all") {
             loadCurrentArea(currentAreaId);
         }
+        if (!currentAreaId) {
+            localStorage.removeItem("currentArea");
+            setCurrentArea(undefined);
+        }
     }, [currentAreaId]);
 
     const updateSearchParam = (area: Area) => {
+        if (area.id == 'all') {localStorage.removeItem("currentArea")}
         const params = new URLSearchParams();
         if (area.id != 'all') {params.set("areaId", area.id);}
         // Keep existing params that are not in the form

@@ -2,15 +2,16 @@ import { getErrorMessage } from "@/lib/utils";
 import { listMeters } from "../api/list-meter.api";
 import { Meter } from "../types";
 import { displayError } from "@/components/display-message";
-import { LoadOptions } from "@/components/paginated-async-select";
+import { Additional, LoadOptions, OptionType } from "@/components/paginated-async-select";
+import { GroupBase, OptionsOrGroups } from "react-select";
 
 export type MeterOption = {
     value: string;
     label: string;
     meter: Meter;
 }
-
-const getMeterOptions: LoadOptions<MeterOption> = async (inputValue: string, loadedOptions, additional) => {
+export type MeterLoadOption = (inputValue: string, loadedOptions:OptionsOrGroups<OptionType, GroupBase<OptionType>>, additional: Additional | undefined,excludedMeterIds?: string[]) => ReturnType<LoadOptions<MeterOption>>;
+const getMeterOptions: MeterLoadOption = async (inputValue: string, loadedOptions, additional,excludedMeterIds?: string[]) => {
     const page = additional?.page ?? 1;
     const pageSize = 10;
     try {
@@ -25,7 +26,7 @@ const getMeterOptions: LoadOptions<MeterOption> = async (inputValue: string, loa
             meter: meter
         }));
         return {
-            options,
+            options: excludedMeterIds && excludedMeterIds.length? options.filter((mt)=> !excludedMeterIds.includes(mt.value)):options,
             hasMore: meters.hasMore,
             additional: {
                 page: page + 1,
@@ -44,9 +45,9 @@ const getMeterOptions: LoadOptions<MeterOption> = async (inputValue: string, loa
     }
 }
 
-export const useMeterOptions = () => {
+export const useMeterOptions = (excludedMeterIds?: string[]) => {
     const loadOptions: LoadOptions<MeterOption> = async (inputValue, loadedOptions, additional) => {
-        return await getMeterOptions(inputValue, loadedOptions, additional);
+        return await getMeterOptions(inputValue, loadedOptions, additional,excludedMeterIds);
     };
 
     return {loadOptions};

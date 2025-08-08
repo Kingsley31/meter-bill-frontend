@@ -22,9 +22,10 @@ import { MeterOption } from "@/shared/meter/hooks/use-meter-options.hook"
 type CreateMeterFormProps = {
     loadAreaOptions: LoadOptions<AreaOption>;
     loadMeterOptions: LoadOptions<MeterOption>;
+    onExcludeSelectedMeters: (excludeddMeterIds: string[]) => void,
 }
 
-export function CreateMeterForm({ loadAreaOptions, loadMeterOptions }: CreateMeterFormProps) {
+export function CreateMeterForm({ loadAreaOptions, loadMeterOptions, onExcludeSelectedMeters }: CreateMeterFormProps) {
     const [isClient, setIsClient] = useState(false);
     useEffect(() => {
         setIsClient(true);
@@ -256,6 +257,7 @@ export function CreateMeterForm({ loadAreaOptions, loadMeterOptions }: CreateMet
                                                         loadOptions={loadMeterOptions}
                                                         setFormValue={(option: OptionType | null) => {
                                                             field.onChange(option?.value)
+                                                            onExcludeSelectedMeters([option?.value as string,...fields.map((f)=> f.subMeterId)])
                                                         }}
                                                         placeholder="Select reference meter"
                                                     />
@@ -302,6 +304,7 @@ export function CreateMeterForm({ loadAreaOptions, loadMeterOptions }: CreateMet
                                                             <PaginatedAsyncSelect
                                                                 loadOptions={loadMeterOptions}
                                                                 setFormValue={(option: OptionType | null) => {
+                                                                    onExcludeSelectedMeters([...fields.filter((f) => f.subMeterId!=field.value).map((f)=> f.subMeterId),option?.value as string,form.getValues().calculationReferenceMeterId??""])
                                                                     field.onChange(option?.value)
                                                                 }}
                                                                 placeholder="Select sub meter"
