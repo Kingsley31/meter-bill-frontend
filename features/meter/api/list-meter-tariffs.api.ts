@@ -21,7 +21,7 @@ export async function listMeterTariffs(filters: ListMeterTariffsFilters): Promis
     ...(filters.tariff && { tariff: filters.tariff }),
   };
 
-  const response = await apiClient.get<PaginatedResponse<MeterTariff>>(`/meters/${filters.meterId}/tariffs`, {
+  const response = await apiClient.get<PaginatedResponse<MeterTariff>>(`/tariffs/meter-tariffs/${filters.meterId}`, {
     params,
   });
   return response.data;

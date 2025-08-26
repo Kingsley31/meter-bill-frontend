@@ -32,11 +32,11 @@ type SetMeterTariffProps = {
 
 export function SetMeterTariff({ meter, refetch }: SetMeterTariffProps) {
   const [open, setOpen] = useState(false)
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-  const day = String(today.getDate()).padStart(2, '0');
-  const minDate = `${year}-${month}-${day}`;
+  // const today = new Date();
+  // const year = today.getFullYear();
+  // const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+  // const day = String(today.getDate()).padStart(2, '0');
+  // const minDate = `${year}-${month}-${day}`;
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
   })
@@ -48,7 +48,13 @@ export function SetMeterTariff({ meter, refetch }: SetMeterTariffProps) {
         toast.error('This tariff rate is already set to the meter.');
         return;
     }
-    setMeterTariffMutation.mutate({meterId: meter.id, tariff: data.tariff,effectiveFrom: data.effectiveFrom},{
+    setMeterTariffMutation.mutate({
+      meterId: meter.id, 
+      tariff: data.tariff,
+      effectiveFrom: data.effectiveFrom, 
+      meterNumber: meter.meterNumber, 
+      areaId: meter.areaId
+    },{
          onSuccess: () => {
             displaySuccess("Tariff Set",`Billing rate set to ₦${form.getValues("tariff")}/kWh.`);
             form.reset({ tariff: form.getValues("tariff") });
@@ -97,7 +103,7 @@ export function SetMeterTariff({ meter, refetch }: SetMeterTariffProps) {
           </div>
           <div className="space-y-2">
             <Label htmlFor="effectiveFrom">Effective From</Label>
-            <Input id="effectiveFrom" type="date" {...form.register("effectiveFrom")} min={minDate}/>
+            <Input id="effectiveFrom" type="date" {...form.register("effectiveFrom")}/>
             {form.formState.errors.effectiveFrom && (
               <p className="text-sm text-red-500">
                 {form.formState.errors.effectiveFrom.message}

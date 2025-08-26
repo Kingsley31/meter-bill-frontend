@@ -21,7 +21,7 @@ export async function listAreaTariffs(filters: ListAreaTariffsFilters): Promise<
     ...(filters.tariff && { tariff: filters.tariff }),
   };
 
-  const response = await apiClient.get<PaginatedResponse<AreaTariff>>(`/areas/${filters.areaId}/tariffs`, {
+  const response = await apiClient.get<PaginatedResponse<AreaTariff>>(`/tariffs/area-tariffs/${filters.areaId}`, {
     params,
   });
   return response.data;

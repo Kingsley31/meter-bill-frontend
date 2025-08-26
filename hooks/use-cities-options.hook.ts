@@ -13,7 +13,7 @@ export type CityOption = {
 export type CityLoadOption = (inputValue: string, loadedOptions:OptionsOrGroups<OptionType, GroupBase<OptionType>>, additional: Additional | undefined,countryCode: string,stateCode: string) => ReturnType<LoadOptions<CityOption>>;
 const getCityOptions: CityLoadOption = (inputValue: string, loadedOptions, additional,countryCode: string,stateCode: string) => {
     const page = additional?.page ?? 1;
-    const pageSize = 10;
+    const pageSize = 100;
     try {
         const cities = City.getCitiesOfState(countryCode, stateCode).filter((c)=> c.name.toLowerCase().includes(inputValue.toLowerCase().trim()));
         const paginatedCitys = cities.slice(
