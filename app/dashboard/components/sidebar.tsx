@@ -66,6 +66,10 @@ const items = [
     title: routes.bills.title,
     url: routes.bills.path,
     icon: Receipt,
+    subItems: [
+      { title: routes.bills.title, url: routes.bills.path, icon: Receipt },
+      { title: routes.generateBill.title, url: routes.generateBill.path, icon: Receipt },
+    ],
   },
   {
     title: routes.report.title,

@@ -6,5 +6,6 @@ export const routes = {
   createArea: { path: "/dashboard/areas/create", title: "Create Area" },
   customers: { path: "/dashboard/customers", title: "Customers" },
   bills: { path: "/dashboard/bills", title: "Bills" },
+  generateBill: { path: "/dashboard/bills/generate", title: "Generate Bill" },
   report: { path: "/dashboard/report", title: "Report" },
 };
