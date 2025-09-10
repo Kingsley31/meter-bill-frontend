@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Gauge, Zap, EyeOff, TrendingUp, HandCoins, Handshake } from "lucide-react";
+import { HandCoins, Handshake } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { displayError } from "@/components/display-message";
 import { getErrorMessage } from "@/lib/utils";

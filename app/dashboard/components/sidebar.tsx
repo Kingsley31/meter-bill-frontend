@@ -58,11 +58,6 @@ const items = [
     ],
   },
   {
-    title: routes.customers.title,
-    url: routes.customers.path,
-    icon: Users,
-  },
-  {
     title: routes.bills.title,
     url: routes.bills.path,
     icon: Receipt,
@@ -75,6 +70,11 @@ const items = [
     title: routes.report.title,
     url: routes.report.path,
     icon: IconReport,
+  },
+  {
+    title: routes.accessControll.title,
+    url: routes.accessControll.path,
+    icon: Users,
   },
 ]
 

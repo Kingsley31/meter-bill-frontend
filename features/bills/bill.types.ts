@@ -1,3 +1,5 @@
+import { BillGenerationRequestStatus } from "./bill.enums";
+
 export type BillRecipient = {
   id: string;
   name: string;
@@ -48,4 +50,23 @@ export type BillBreakdown = {
   totalConsumption: string;
   tariff: string;
   totalAmount: string;
+}
+
+export type BillGenerationRequest = {
+  id: string;
+  xRequestId: string;
+  requestedByUserId: string;
+  requestedByUserName: string;
+  requestDate: string;
+  completedDate?: string | null;
+  scope: string;
+  isConsolidated: boolean;
+  startDate: string;
+  endDate: string;
+  recipientType: string;
+  recipientId?: string | null;
+  areaId?: string | null;
+  areaName?: string | null;
+  status: BillGenerationRequestStatus;
+  note?: string | null;
 }
