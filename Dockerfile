@@ -1,29 +1,25 @@
-# Stage 1: Install dependencies
-FROM node:22.11.0-alpine AS deps
-WORKDIR /app
-
-# Copy package.json and package-lock.json
-COPY package.json package-lock.json ./
-
-# Install only production dependencies
-RUN npm ci --omit=dev --ignore-scripts
-
-# Stage 2: Build the application
+# Stage 1: Install all dependencies for building
 FROM node:22.11.0-alpine AS builder
 WORKDIR /app
 
-COPY --from=deps /app/node_modules ./node_modules
+# Copy package files
+COPY package.json package-lock.json ./
+
+# Install all dependencies (including dev)
+RUN npm ci
+
+# Copy source code
 COPY . .
 
-# Build Next.js
+# Build the Next.js app
 ENV NODE_ENV=production
 RUN npm run build
 
-# Stage 3: Production image
+# Stage 2: Production image
 FROM node:22.11.0-alpine AS runner
 WORKDIR /app
 
-# Non-root user for security
+# Non-root user
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
@@ -36,11 +32,10 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 
-# Set permissions
+# Permissions
 RUN chown -R nextjs:nodejs /app
 USER nextjs
 
 EXPOSE 3001
 
-# Start Next.js in production mode
 CMD ["npm", "run", "start"]
