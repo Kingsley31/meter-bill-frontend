@@ -2,7 +2,7 @@
 import { getToken } from '@/features/auth/auth.token.service';
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.energymixtech.com';
 
 export const apiClient: AxiosInstance = axios.create({
   baseURL: BASE_URL,
