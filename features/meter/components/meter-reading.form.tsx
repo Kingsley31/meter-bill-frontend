@@ -177,7 +177,7 @@ export function CreateMeterReadingForm({meter, refetch, triggerType = MeterReadi
             <Input
               id="reading"
               type="number"
-              step="1"
+              step="any"
               {...form.register("reading", { valueAsNumber: true })}
             />
             {form.formState.errors.reading && (

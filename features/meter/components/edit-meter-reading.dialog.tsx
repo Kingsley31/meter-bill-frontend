@@ -212,7 +212,7 @@ export function EditMeterReadingDialog({meterReading, readingPreviousReading, me
                   id="reading"
                   type="number"
                   defaultValue={meterReading.kwhReading}
-                  step="1"
+                  step="any"
                   {...form.register("reading", { valueAsNumber: true })}
                 />
                 {form.formState.errors.reading && (
