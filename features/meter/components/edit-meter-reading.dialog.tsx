@@ -17,6 +17,7 @@ import { MeterReadingConfirmationAlert } from "./confirm-meter-reading.dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { useEditMeterReading } from "../hooks/use-edit-meter-reading.hook";
 import { MeterReadingBillConfirmationAlert } from "./confirm-meter-reading-bill.dialog";
+import { getUploadUrl } from "@/shared/file/api/get-upload-url.api";
 //import { set } from "date-fns";
 
 
@@ -81,13 +82,14 @@ export function EditMeterReadingDialog({meterReading, readingPreviousReading, me
       const uploadReading = async (data: FormValues) => {
         setIsSubmitting(true)
         try {
-            const meterImage = await uploadFile({file: data.image});
+            const {signedUploadUrl, fileKey} = await getUploadUrl({file: data.image});
+            await uploadFile({file: data.image, signedUrl: signedUploadUrl});
             useEditReading.mutate({
                 meterId: meter.id,
                 readingId: meterReading.id,
                 kwhReading: data.reading,
                 readingDate: meterReading.readingDate, 
-                meterImage,
+                meterImage: fileKey,
                 reason: data.reason,
             },{
                     onSuccess: () => {

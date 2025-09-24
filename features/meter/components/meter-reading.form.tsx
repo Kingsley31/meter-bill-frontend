@@ -21,6 +21,7 @@ import { MAX_METER_IMAGE_SIZE_BYTES } from "../constants"
 import { uploadFile } from "@/shared/file/api/upload-file.api"
 import { useUploadMeterReading } from "../hooks/use-upload-meter-reading.hook"
 import { MeterReadingConfirmationAlert } from "./confirm-meter-reading.dialog"
+import { getUploadUrl } from "@/shared/file/api/get-upload-url.api"
 
 
 
@@ -78,8 +79,9 @@ export function CreateMeterReadingForm({meter, refetch, triggerType = MeterReadi
   const uploadReading = async (data: FormValues) => {
     setIsSubmitting(true)
     try {
-        const meterImage = await uploadFile({file: data.image});
-        useUploadReading.mutate({meterId: meter.id, kwhReading: data.reading,readingDate: data.date, meterImage},{
+        const {signedUploadUrl, fileKey} = await getUploadUrl({file: data.image});
+        await uploadFile({file: data.image, signedUrl: signedUploadUrl});
+        useUploadReading.mutate({meterId: meter.id, kwhReading: data.reading,readingDate: data.date, meterImage: fileKey},{
                 onSuccess: () => {
                     displaySuccess("Reading uploaded", "Your meter reading has been submitted successfully.");
                     form.reset()
