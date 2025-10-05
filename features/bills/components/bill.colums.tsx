@@ -62,7 +62,7 @@ export function getAllBillColumns({}: GetAllBillsColumsProps) {
     {
       accessorKey: "createdAt",
       header: "Date Generated",
-      cell: ({ row }) => format(new Date(row.original.startDate), "PPP"),
+      cell: ({ row }) => format(new Date(row.original.createdAt), "PPP"),
     },
     // {
     //   accessorKey: "address",
